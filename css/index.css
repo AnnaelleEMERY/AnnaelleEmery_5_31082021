@@ -184,7 +184,7 @@ ul ol {
 }
 
 dt {
-  font-weight: 700;
+  font-weight: 900;
 }
 
 dd {
@@ -281,7 +281,7 @@ kbd {
 kbd kbd {
   padding: 0;
   font-size: 1em;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 figure {
@@ -4779,7 +4779,7 @@ textarea.form-control-lg {
   display: inline-block;
   padding: 0.35em 0.65em;
   font-size: 0.75em;
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1;
   color: #fff;
   text-align: center;
@@ -4809,7 +4809,7 @@ textarea.form-control-lg {
 }
 
 .alert-link {
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .alert-dismissible {
@@ -7474,7 +7474,7 @@ textarea.form-control-lg {
 }
 
 .fw-bold {
-  font-weight: 700 !important;
+  font-weight: 900 !important;
 }
 
 .fw-bolder {
