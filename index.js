@@ -1,5 +1,5 @@
 // js
-fetch('http://localhost:3000/api/cameras')
+fetch('https://annaelle-orinoco-api.herokuapp.com/api/teddies')
   .then(response => response.json())
   .then(data => {
       const articlesContainer = document.getElementById('articles');
@@ -7,3 +7,6 @@ fetch('http://localhost:3000/api/cameras')
           articlesContainer.innerHTML += `${article.name} ${article.price}<br>`;
       }
   });
+
+
+
