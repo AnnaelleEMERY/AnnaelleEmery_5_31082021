@@ -11112,5 +11112,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.teddy-card__pic {
+  width: 50%;
+}
 
 /*# sourceMappingURL=index.css.map */
