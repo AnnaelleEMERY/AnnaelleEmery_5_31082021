@@ -11112,8 +11112,68 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.h1-Orinoco {
+  margin-top: 1rem;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: repeat(1, 100%);
+  grid-gap: 2rem;
+  border: none;
+}
+@media only screen and (min-width: 768px) {
+  .card {
+    grid-template-columns: repeat(2, 47.5%);
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .card {
+    grid-template-columns: repeat(3, 31.6%);
+  }
+}
+
+.teddy-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  margin: 2rem 0;
+  margin-bottom: 2rem;
+  box-shadow: 1px 1px 10px #cccccc;
+  border-radius: 10px;
+  color: #292929;
+  text-decoration: none;
+}
+.teddy-card:hover {
+  color: #292929;
+  box-shadow: 1px 1px 15px #cccccc;
+}
+.teddy-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
 .teddy-card__pic {
-  width: 50%;
+  width: 100%;
+}
+.teddy-card__btn {
+  align-self: center;
+  background-color: #F3E9F1;
+  color: #312927;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: transform 250ms ease-in-out 0s;
+}
+.teddy-card__btn:hover {
+  background-color: #825A5A;
+  color: white;
+  transform: translateY(-5px);
 }
 
 /*# sourceMappingURL=index.css.map */
