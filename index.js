@@ -35,7 +35,6 @@ fetch(('https://annaelle-orinoco-api.herokuapp.com/api/teddies'))
         cardElt.classList.add('teddy-card');
         contentElt.classList.add('teddy-card__content');
         picElt.classList.add('teddy-card__pic');
-        descriptionElt.classList.add('teddy-card__description');
         priceElt.classList.add('teddy-card__price')
         btnElt.classList.add('teddy-card__btn');
 
