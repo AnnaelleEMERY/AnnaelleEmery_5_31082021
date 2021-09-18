@@ -26,7 +26,7 @@
                                 <a class="nav-link" href="index.html">Boutique</a>
                             </li>
                             <li class="nav-item align-self-end ">
-                                <a class="nav-link" href="#">Panier</a>
+                                <a class="nav-link" href="index-cart.html">Panier</a>
                             </li>
                         </ul>
                     </div>
@@ -36,7 +36,50 @@
     </header>
 
     <main class="container">
-        <h1 class="h1">Votre panier</h1>
+        <main class="basket flex-block">
+            <div id="basket-resume">
+                <p id="panierVide">Votre panier est vide</p>
+            </div>
+            <div class="form">
+                <form method="post" name="form-panier">
+                    <fieldset>
+                        <legend>Civilité</legend>
+                        <div class="form__group">
+                            <div class="form__group">
+                                <label for="formNom">Nom : </label>
+                                <input type="text" id="formNom" class="form-control input-control" required name="formNom">
+                            </div>
+                            <div class="form__group">
+                                <label for="formPrenom" class="right-inline">Prénom :</label>
+                                <input type="text" id="formPrenom" class="form-control input-control" required name="formPrenom">
+                            </div>
+                        </div>
+                    </fieldset> 
+                    <fieldset>
+                        <legend>Coordonnées</legend>
+                        <div class="form__group">
+                            <label for="formMail">E-mail :</label>
+                            <input type="email" id="formMail" class="form-control input-control" required name="formMail">
+                        </div>
+                        <div class="form__group">
+                            <label for="formAdresse">Adresse :</label>
+                            <input type="text" id="formAdresse" class="form-control input-control" required name="formAdresse">
+                        </div>
+                        <div class="form__group">
+                            <label for="formVille">Ville :</label>
+                            <input type="text" id="formVille" class="form-control input-control" required name="formVille">
+                        </div>
+                    </fieldset> 
+                    <input type="button" value="Je valide mon panier et mes informations" class="btn btn--form" id="envoiPost">
+                </form>
+            </div>
+        </main>
+
+        <script src="index-cart.js"></script>
+        <script>
+            addition();
+            validForm()
+        </script>
     </main>
 
     <footer class="bg-light">

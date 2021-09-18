@@ -1,13 +1,58 @@
-// Allons chercher les données !!
-fetch(('https://annaelle-orinoco-api.herokuapp.com/api/teddies'))
-  .then(response => response.json())
-  .then(data => {
+const productSell = "teddies"  //Au choix entre : "cameras" - "furniture" - "teddies"
+const APIURL = "https://annaelle-orinoco-api.herokuapp.com/api/" + productSell + "/";
 
-    // Choix de l'élément dans lequel nous intégrons ces données
-    let teddiesList = document.querySelector('.card');
+//id du produit pour permettre un tri dans l'API
 
+let idProduct = "";
+
+if(localStorage.getItem("userCart")){
+	console.log("Le panier de l'utilisateur existe dans le localStorage");
+}else{
+	console.log("Le panier de l'utilisateur n'existe pas, il va être créé et envoyé dans le localStorage");
+  	//Le panier est un tableau de produits
+  	let cartInit = [];
+  	localStorage.setItem("userCart", JSON.stringify(cartInit));
+  };
+
+  	//Tableau et objet demandé par l'API pour la commande
+  	let contact;
+  	let products = [];
+
+	//L'user a maintenant un panier
+	let userCart = JSON.parse(localStorage.getItem("userCart"));
+
+getProducts = () =>{
+	return new Promise((resolve) =>{
+		let request = new XMLHttpRequest();
+		request.onreadystatechange = function() {
+			if(this.readyState == XMLHttpRequest.DONE && this.status == 200) 
+			{
+				resolve(JSON.parse(this.responseText));
+				console.log("Connection ok");
+
+				//L'appel est réussi => suppression des message d'erreur
+				error = document.getElementById("error");
+				//On supprime le message d'erreur s'il existe
+				if(error){
+					error.remove();
+				}
+			}else{
+				console.log("ERROR connection API");
+			}
+		}
+		request.open("GET", APIURL + idProduct);
+		request.send();
+	});
+};
+
+async function allProductsList(){
+  const products = await getProducts();
+
+// Choix de l'élément dans lequel nous intégrons ces données
+    let teddiesList = document.querySelector('.card')
+    
     // Intégration des blocs et des données qui seront dedans
-    for (let teddy of data) {
+      products.forEach((teddy) => {
         let cardElt = document.createElement('a');
         let contentElt = document.createElement('div');
         let picElt = document.createElement('img');
@@ -18,9 +63,9 @@ fetch(('https://annaelle-orinoco-api.herokuapp.com/api/teddies'))
 
         picElt.src = teddy.imageUrl;
         nameElt.textContent = teddy.name;
-        priceElt.textContent = teddy.price + "€";
+        priceElt.textContent = teddy.price / 100 + " €";
         descriptionElt.textContent = teddy.description;
-        btnElt.textContent = "Ajouter au panier";
+        btnElt.textContent = "Voir le nounours";
 
         teddiesList.appendChild(cardElt);
 
@@ -38,7 +83,6 @@ fetch(('https://annaelle-orinoco-api.herokuapp.com/api/teddies'))
         priceElt.classList.add('teddy-card__price')
         btnElt.classList.add('teddy-card__btn');
 
-        cardElt.setAttribute('href', './pages/product.html?id=' + teddy._id);
-    }
-});
-
+        cardElt.setAttribute('href', 'index-product.html?id=' + teddy._id);
+      });
+};
