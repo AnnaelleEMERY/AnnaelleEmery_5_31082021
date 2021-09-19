@@ -14,8 +14,7 @@ if(localStorage.getItem("userCart")){
 	//L'user a maintenant un panier
 	let userCart = JSON.parse(localStorage.getItem("userCart"));
 
-/*Affichage des informations sur la page de confirmation
-**********************************************/
+//Affichage des informations sur la page de confirmation
 resultOrder = () =>{
 	if(sessionStorage.getItem("order") != null){
     //Parse du session storage

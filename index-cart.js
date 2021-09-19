@@ -1,24 +1,16 @@
-/*Génération de l'URL de l'API selon le choix de produit à vendre
-**********************************************/
-
-const productSell = "teddies"  //Au choix entre : "cameras" - "furniture" - "teddies"
+const productSell = "teddies"  //Au choix entre : "cameras" - "furniture" - "teddies" : NOUS ON PREND TEDDIES
 const APIURL = "https://annaelle-orinoco-api.herokuapp.com/api/" + productSell + "/";
 
-//id du produit pour permettre un tri dans l'API
+//id du produit
 
 let idProduct = "";
 
-/*Préparation des requis pour le script
-**********************************************/
-
-/*L'utilisateur à besoin d'un panier dans le localStorage de son navigateur
-Vérifier si le panier existe dans le localStorage, sinon le créer et l'envoyer dans le localStorage au premier chargement du site quelque soit la page*/
-
+// local storage
 if(localStorage.getItem("userCart")){
 	console.log("Le panier de l'utilisateur existe dans le localStorage");
 }else{
 	console.log("Le panier de l'utilisateur n'existe pas, il va être créé et envoyé dans le localStorage");
-  	//Le panier est un tableau de products
+  	//Le panier est un tableau de produits
   	let cartInit = [];
   	localStorage.setItem("userCart", JSON.stringify(cartInit));
   };
@@ -30,9 +22,8 @@ if(localStorage.getItem("userCart")){
 	//L'user a maintenant un panier
 	let userCart = JSON.parse(localStorage.getItem("userCart"));
 
-/*Appel de l'API
-**********************************************/
 
+  // Appel de l'API
 getProducts = () =>{
 	return new Promise((resolve) =>{
 		let request = new XMLHttpRequest();
@@ -40,7 +31,7 @@ getProducts = () =>{
 			if(this.readyState == XMLHttpRequest.DONE && this.status == 200) 
 			{
 				resolve(JSON.parse(this.responseText));
-				console.log("Administration : connection ok");
+				console.log("Connection ok");
 
 				//L'appel est réussi => suppression des message d'erreur
 				error = document.getElementById("error");
@@ -49,7 +40,7 @@ getProducts = () =>{
 					error.remove();
 				}
 			}else{
-				console.log("Administration : ERROR connection API");
+				console.log("ERROR connection API");
 			}
 		}
 		request.open("GET", APIURL + idProduct);
@@ -93,7 +84,7 @@ addition = () =>{
     //Init de l'incrémentation de l'id des lignes pour chaque produit
     let i = 0;
     
-    JSON.parse(localStorage.getItem("userCart")).forEach((product)=>{
+    JSON.parse(localStorage.getItem("userCart")).forEach((teddy)=>{
       //Création de la ligne
       let productLine = document.createElement("tr");
       let productName = document.createElement("td");
@@ -101,8 +92,8 @@ addition = () =>{
       let removeProduct = document.createElement("i");
 
       //Attribution des class pour le css
-      productLine.setAttribute("id", "product"+i);
-      removeProduct.setAttribute("id", "remove"+i);
+      productLine.setAttribute("id", "product" + i);
+      removeProduct.setAttribute("id", "remove" + i);
       removeProduct.setAttribute('class', "fas fa-trash-alt productAnnulation");
       //Pour chaque produit on créer un event sur l'icone de la corbeille pour annuler ce produit
       //bind permet de garder l'incrementation du i qui représente l'index tu panier au moment de la création de l'event
@@ -117,8 +108,8 @@ addition = () =>{
       productLine.appendChild(removeProduct);
 
       //Contenu des lignes
-      productName.innerHTML = product.name;
-      productUnitPrice.textContent = product.price / 100 + " €";
+      productName.innerHTML = teddy.name;
+      productUnitPrice.textContent = teddy.price / 100 + " €";
   });
 
     //Dernière ligne du tableau : Total
@@ -130,8 +121,8 @@ addition = () =>{
 
     //Calcule de l'addition total
     let totalPrice = 0;
-    JSON.parse(localStorage.getItem("userCart")).forEach((product)=>{
-      totalPrice += product.price / 100;
+    JSON.parse(localStorage.getItem("userCart")).forEach((teddy)=>{
+      totalPrice += teddy.price / 100;
     });
 
     //Affichage du prix total à payer dans l'addition
@@ -229,7 +220,7 @@ checkInput = () =>{
 
 //Vérification du panier
 checkPanier = () =>{
-//Vérifier qu'il y ai au moins un product dans le panier
+//Vérifier qu'il y ai au moins un produit dans le panier
 let etatPanier = JSON.parse(localStorage.getItem("userCart"));
 //Si le panier est vide ou null (suppression localStorage par)=>alerte
 if(etatPanier == null){
@@ -243,8 +234,8 @@ return false;
 }else{
 console.log("Administration : Le panier n'est pas vide")
   //Si le panier n'est pas vide on rempli le products envoyé à l'API
-  JSON.parse(localStorage.getItem("userCart")).forEach((product) =>{
-    products.push(product._id);
+  JSON.parse(localStorage.getItem("userCart")).forEach((teddy) =>{
+    products.push(teddy._id);
   });
   console.log("Administration : Ce tableau sera envoyé à l'API : " + products)
   return true;

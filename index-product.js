@@ -1,24 +1,16 @@
-/*Génération de l'URL de l'API selon le choix de produit à vendre
-**********************************************/
-
-const productSell = "teddies"  //Au choix entre : "cameras" - "furniture" - "teddies"
+const productSell = "teddies"  //Au choix entre : "cameras" - "furniture" - "teddies" : NOUS ON PREND TEDDIES
 const APIURL = "https://annaelle-orinoco-api.herokuapp.com/api/" + productSell + "/";
 
-//id du produit pour permettre un tri dans l'API
+//id du produit
 
 let idProduct = "";
 
-/*Préparation des requis pour le script
-**********************************************/
-
-/*L'utilisateur à besoin d'un panier dans le localStorage de son navigateur
-Vérifier si le panier existe dans le localStorage, sinon le créer et l'envoyer dans le localStorage au premier chargement du site quelque soit la page*/
-
+// local storage
 if(localStorage.getItem("userCart")){
 	console.log("Le panier de l'utilisateur existe dans le localStorage");
 }else{
 	console.log("Le panier de l'utilisateur n'existe pas, il va être créé et envoyé dans le localStorage");
-  	//Le panier est un tableau de products
+  	//Le panier est un tableau de produits
   	let cartInit = [];
   	localStorage.setItem("userCart", JSON.stringify(cartInit));
   };
@@ -30,6 +22,8 @@ if(localStorage.getItem("userCart")){
 	//L'user a maintenant un panier
 	let userCart = JSON.parse(localStorage.getItem("userCart"));
 
+
+  // Appel de l'API
 getProducts = () =>{
 	return new Promise((resolve) =>{
 		let request = new XMLHttpRequest();
@@ -37,7 +31,7 @@ getProducts = () =>{
 			if(this.readyState == XMLHttpRequest.DONE && this.status == 200) 
 			{
 				resolve(JSON.parse(this.responseText));
-				console.log("Administration : connection ok");
+				console.log("Connection ok");
 
 				//L'appel est réussi => suppression des message d'erreur
 				error = document.getElementById("error");
@@ -46,7 +40,7 @@ getProducts = () =>{
 					error.remove();
 				}
 			}else{
-				console.log("Administration : ERROR connection API");
+				console.log("ERROR connection API");
 			}
 		}
 		request.open("GET", APIURL + idProduct);

@@ -1,10 +1,11 @@
-const productSell = "teddies"  //Au choix entre : "cameras" - "furniture" - "teddies"
+const productSell = "teddies"  //Au choix entre : "cameras" - "furniture" - "teddies" : NOUS ON PREND TEDDIES
 const APIURL = "https://annaelle-orinoco-api.herokuapp.com/api/" + productSell + "/";
 
-//id du produit pour permettre un tri dans l'API
+//id du produit
 
 let idProduct = "";
 
+// local storage
 if(localStorage.getItem("userCart")){
 	console.log("Le panier de l'utilisateur existe dans le localStorage");
 }else{
@@ -21,6 +22,8 @@ if(localStorage.getItem("userCart")){
 	//L'user a maintenant un panier
 	let userCart = JSON.parse(localStorage.getItem("userCart"));
 
+
+  // Appel de l'API
 getProducts = () =>{
 	return new Promise((resolve) =>{
 		let request = new XMLHttpRequest();
@@ -45,6 +48,7 @@ getProducts = () =>{
 	});
 };
 
+// liste complète des produits
 async function allProductsList(){
   const products = await getProducts();
 
