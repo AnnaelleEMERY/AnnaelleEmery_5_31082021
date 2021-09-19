@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/AnnaelleEMERY/AnnaelleEmery_5_31082021#readme",
   "dependencies": {
-    "bootstrap": "^5.1.0"
+    "bootstrap": "^5.1.0",
+    "sass": "^1.41.1",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
   }
 }
