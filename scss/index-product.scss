@@ -1,0 +1,44 @@
+@import "variables_overrides";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "bases";
+@import "variables";
+
+
+
+.flex-block {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+}
+
+#one-teddy_img {
+    width: 100%;
+}
+
+.sheet-product__description {
+    padding: 1rem 0;
+}
+
+.sheet-product__description__order {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#ajouterProduitPanier {
+    background-color: #825A5A;
+    border-radius:20px;
+    color: white;
+    transition: transform 250ms ease-in-out 0s;
+    
+    &:hover{
+        color: #312927;
+        background-color: #F3E9F1;
+        transform: translateY(-5px);
+    }
+}
+.div_one-teddy-price {
+    display: flex;
+    flex-direction: row;
+}

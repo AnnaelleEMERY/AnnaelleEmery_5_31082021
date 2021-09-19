@@ -4,12 +4,13 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width"> 
 	<title>Orinoco</title>
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/index-product.css" />
     <script src="https://kit.fontawesome.com/97fdc17419.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet"> 
+    
 </head>
 
 <body>
@@ -38,28 +39,38 @@
             <i id="error__logo" class="fas fa-exclamation-triangle"></i>
             <p id="error__msg">Désolé une erreur avec l'API est survenue, ou la page démandée n'existe pas ! Veuillez réesayer</p>
         </div>
-        <section id="section" class="sheet-product">
-            <h2 id="one-teddy_name" class="sheet-product__name">Nom du produit</h2>
+        <div id="section" class="sheet-product">       
             <div class="flex-block">
+
                 <div class="sheet-product__img">
-                    <img src="#" id="one-teddy_img" alt="Photo du produit">
+                    <img src="#" id="one-teddy_img" class="one-teddy_img" alt="Photo du produit">
                 </div>
+                
                 <div class="sheet-product__description">
+                    <h2 id="one-teddy_name" class="sheet-product__name">Nom du produit</h2>
                     <p class="sheet-product__description__head">Description :</p>
-                    <p id="one-teddy_description" class="sheet-product__description__resume">
-                    </p>
+                    <p id="one-teddy_description" class="sheet-product__description__resume"></p>
+
                     <label for="optionSelect" class="sheet-product__description__head">Choisissez votre option :</label>
-                    <select name="option" id="optionSelect">
-                        <option value="">Faites votre choix</option>
-                    </select>
-                    <p class="sheet-product__description__head">Prix :</p>
-                    <p id="one-teddy_price"></p>
+
+                    <div class="div_one-teddy-choice">
+                        <select name="option" id="optionSelect">
+                            <option value="">Faites votre choix</option>
+                        </select>
+                    </div>
+
+                    <div class="div_one-teddy-price">
+                        <p class="sheet-product__description__head">Prix : </p>
+                        <p id="one-teddy_price"></p>
+                    </div>
                     <div class="sheet-product__description__order">
+
                         <button class="btn btn--basket" id="ajouterProduitPanier">Mettre dans le panier</button>
                     </div>
                 </div>
+
             </div>
-        </section>
+        </div>
 
         <script src="index-product.js"></script>
         <script>

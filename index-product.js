@@ -58,7 +58,7 @@ async function productDetails(){
     console.log("Ceci est la page du produit id_" + selectedProduct._id);
 
     //Faire apparaitre la fiche produit initialement en display none
-    let section = document.getElementById("section");
+    let section = document.getElementById("main");
     section.style.display = "flex";
     
     //Remplissage de la fiche produit
