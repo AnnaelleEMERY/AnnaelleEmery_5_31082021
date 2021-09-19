@@ -9,14 +9,26 @@
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
+
+    @media #{$breakpoint-tablet-max} {
+        flex-direction: row;
+    }
 }
 
 #one-teddy_img {
     width: 100%;
+
+    @media #{$breakpoint-tablet-max} {
+        width: 80%;
+    }
 }
 
 .sheet-product__description {
     padding: 1rem 0;
+
+    @media #{$breakpoint-tablet-max} {
+        padding: 0rem;
+    }
 }
 
 .sheet-product__description__order {
@@ -38,7 +50,15 @@
         transform: translateY(-5px);
     }
 }
+
 .div_one-teddy-price {
     display: flex;
     flex-direction: row;
+    margin-top: 1rem;
+
+    .sheet-product__description__head {
+        margin-right: 0.3rem;
+    }
 }
+
+
