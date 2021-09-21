@@ -37,8 +37,9 @@
     <main id="main"class="container">
         <div id="error">
             <i id="error__logo" class="fas fa-exclamation-triangle"></i>
-            <p id="error__msg">Désolé une erreur avec l'API est survenue, ou la page démandée n'existe pas ! Veuillez réesayer</p>
+            <p id="error__msg">Désolé une erreur est survenue, ou la page démandée n'existe pas ! Veuillez réessayer</p>
         </div>
+        
         <div id="section" class="sheet-product">       
             <div class="flex-block">
 
@@ -65,17 +66,17 @@
                     </div>
                     
                     <div class="sheet-product__description__order">
-                        <button class="btn btn--basket" id="ajouterProduitPanier">Mettre dans le panier</button>
+                        <button class="btn btn--basket" id="btn-addToCart">Mettre dans le panier</button>
                     </div>
                 </div>
 
             </div>
         </div>
 
-        <script src="index-product.js"></script>
+        <script src="index.js"></script>
         <script>
             productDetails();
-            addPanier()
+            addToCart()
         </script>
     </main>
 
