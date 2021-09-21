@@ -9,23 +9,6 @@ let idProduct = "";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // Appel de l'API
 getProducts = () =>{
 	return new Promise((resolve) =>{
@@ -139,10 +122,10 @@ async function productDetails(){
 
 /*Fonction ajouter le produit au panier de l'utilisateur
  **********************************************/
-async function addToCart(){
+
+function addToCart(){
   //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
-  idProduct = location.search.substring(4);
-  const selectedTeddy = await getProducts();
+  const selectedTeddy = idProduct;
 
 // Sélection du bouton addToCart
 const addToCart = document.getElementById('btn-addToCart');
@@ -165,7 +148,7 @@ const addToCart = document.getElementById('btn-addToCart');
 
   console.log(optionsTeddyLocalStorage);
 
-  //le local storage
+ //le local storage*********************************************************************************************************************
 // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
 let productsForLocalStorage = JSON.parse(localStorage.getItem('localStorage'));
 console.log(productsForLocalStorage);
@@ -174,9 +157,9 @@ console.log(productsForLocalStorage);
 const popupConfirmation = () => {
   if(window.confirm(`Votre ourson a bien été ajouté au panier
 Pour consulter le panier cliquez sur OK, ou revenez à l'accueil avec ANNULER` )) {
-    window.location.href = "index.html";
-  } else {
     window.location.href = "index-cart.html";
+  } else {
+    window.location.href = "index.html";
   }
 };
 
@@ -219,7 +202,7 @@ else {
 
 addition = () =>{
   //Vérifie si un produit est dans le panier
-  if(JSON.parse(localStorage.getItem("userCart")).length > 0){
+  if(JSON.parse(localStorage.getItem("localStorage")).length > 0){
     //S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
     document.getElementById("emptyCart").remove();
 
@@ -250,7 +233,7 @@ addition = () =>{
     //Init de l'incrémentation de l'id des lignes pour chaque produit
     let i = 0;
     
-    JSON.parse(localStorage.getItem("userCart")).forEach((productsForLocalStorage)=>{
+    JSON.parse(localStorage.getItem("localStorage")).forEach((productsForLocalStorage)=>{
       //Création de la ligne
       let productLine = document.createElement("tr");
       let productName = document.createElement("td");
@@ -287,7 +270,7 @@ addition = () =>{
 
     //Calcule de l'addition total
     let totalPrice = 0;
-    JSON.parse(localStorage.getItem("userCart")).forEach((teddy)=>{
+    JSON.parse(localStorage.getItem("localStorage")).forEach((teddy)=>{
       totalPrice += teddy.price / 100;
     });
 
@@ -301,13 +284,13 @@ addition = () =>{
 productAnnulation = (i) =>{
   console.log("Enlever le produit à l'index " + i);
     //recupérer le array
-    userCart.splice(i, 1); 
-    console.log("Administration : " + userCart);
+    localStorage.splice(i, 1); 
+    console.log("Administration : " + localStorage);
     //vide le localstorage
     localStorage.clear();
     console.log("localStorage vidé");
     // mettre à jour le localStorage avec le nouveau panier
-    localStorage.setItem('userCart', JSON.stringify(userCart));
+    localStorage.setItem('localStorage', JSON.stringify(localStorage));
     console.log("localStorage mis à jour");
     //relancer la création de l'addition
     window.location.reload();
@@ -387,7 +370,7 @@ checkInput = () =>{
 //Vérification du panier
 checkCart = () =>{
 //Vérifier qu'il y ait au moins un produit dans le panier
-let etatPanier = JSON.parse(localStorage.getItem("userCart"));
+let etatPanier = JSON.parse(localStorage.getItem("localStorage"));
 //Si le panier est vide ou null (suppression localStorage par)=>alerte
 if(etatPanier == null){
 //Si l'utilisateur a supprimé son localStorage etatPanier et qu'il continue le process de commande
@@ -401,7 +384,7 @@ return false;
 console.log("Le panier n'est pas vide")
 
   //Si le panier n'est pas vide on remplit le produit envoyé à l'API
-  JSON.parse(localStorage.getItem("userCart")).forEach((productsForLocalStorage) =>{
+  JSON.parse(localStorage.getItem("localStorage")).forEach((productsForLocalStorage) =>{
     productsForLocalStorage.push(optionsTeddyLocalStorage);
   });
   console.log("Ce tableau sera envoyé à l'API : " + products)
