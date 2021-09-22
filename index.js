@@ -123,9 +123,10 @@ async function productDetails(){
 /*Fonction ajouter le produit au panier de l'utilisateur
  **********************************************/
 
-function addToCart(){
+async function addToCart(){
   //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
-  const selectedTeddy = idProduct;
+  idProduct = location.search.substring(4);
+  const selectedTeddy = await getProducts();
 
 // Sélection du bouton addToCart
 const addToCart = document.getElementById('btn-addToCart');
