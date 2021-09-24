@@ -5,10 +5,6 @@ const APIURL = "https://annaelle-orinoco-api.herokuapp.com/api/" + productSell +
 
 let idProduct = "";
 
-// local storage
-
-
-
   // Appel de l'API
 getProducts = () =>{
 	return new Promise((resolve) =>{
@@ -34,6 +30,18 @@ getProducts = () =>{
 	});
 };
 
+
+
+
+
+
+
+
+
+
+/**********************************************************************************************************/
+/********************************************* Page d'accueil *********************************************/
+/**********************************************************************************************************/
 // liste complète des produits
 async function allProductsList(){
   const products = await getProducts();
@@ -88,8 +96,9 @@ async function allProductsList(){
 
 
 
-
-// ---------------------------Build de la page du produit sélectionné---------------------------
+/**********************************************************************************************************/
+/****************************************Page du produit sélectionné***************************************/
+/**********************************************************************************************************/
 
 async function productDetails(){
     //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
@@ -136,7 +145,7 @@ const addToCart = document.getElementById('btn-addToCart');
   event.preventDefault();
 
 // mettre le choix de l'utilisateur dans une variable 
-  const colorChoice = optionSelect.value;
+  const colorChoice = selectedTeddy.value;
   console.log(colorChoice);
 
 // Récupération des valeurs
@@ -149,12 +158,28 @@ const addToCart = document.getElementById('btn-addToCart');
 
   console.log(optionsTeddyLocalStorage);
 
- //le local storage*********************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**********************************************************************************************************/
+/*********************************************Le local storage*********************************************/
+/**********************************************************************************************************/
+
 // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
 let productsForLocalStorage = JSON.parse(localStorage.getItem('localStorage'));
 console.log(productsForLocalStorage);
 
-//fonction fenêtre popup
+//fonction fenêtre popup =======================> A CHANGER PARCE QUE J'AIME PAS
 const popupConfirmation = () => {
   if(window.confirm(`Votre ourson a bien été ajouté au panier
 Pour consulter le panier cliquez sur OK, ou revenez à l'accueil avec ANNULER` )) {
@@ -164,7 +189,8 @@ Pour consulter le panier cliquez sur OK, ou revenez à l'accueil avec ANNULER` )
   }
 };
 
-//s'il y a déjà des produits dans le local storage
+/* Ajout d'un produit : 
+s'il y a déjà des produits dans le local storage */
 if(productsForLocalStorage) {
   productsForLocalStorage.push(optionsTeddyLocalStorage);
   localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
@@ -172,7 +198,7 @@ if(productsForLocalStorage) {
 
   popupConfirmation();
 }
-//s'il n'y a pas de produits dans le local storage
+//s'il n'y a PAS de produit dans le local storage
 else {
   productsForLocalStorage = [];
   productsForLocalStorage.push(optionsTeddyLocalStorage);
@@ -197,9 +223,9 @@ else {
 
 
 
-
-/*Page panier
-**********************************************/
+/**********************************************************************************************************/
+/***********************************************Page Panier************************************************/
+/**********************************************************************************************************/
 
 addition = () =>{
   //Vérifie si un produit est dans le panier
@@ -210,23 +236,32 @@ addition = () =>{
     //Création de la structure principale du tableau  
     let facture = document.createElement("table");
     let lineArray = document.createElement("tr");
+
     let nameColumn = document.createElement("th");
+    let optionColumn = document.createElement("th");
     let unitPriceColumn = document.createElement("th");
     let removeColumn = document.createElement("th");
+
     let totalLine = document.createElement("tr");
     let refTotalColumn = document.createElement("th");
     let priceColumn = document.createElement("td");
 
-    //Placement de la structure dans la page et du contenu des entetes
+    //Placement de la structure dans la page et du contenu des entêtes
     let factureSection = document.getElementById("basket-resume");
     factureSection.appendChild(facture);
     facture.appendChild(lineArray);
+
     lineArray.appendChild(nameColumn);
-    nameColumn.textContent = "Nom du produit";
+    nameColumn.textContent = "Nom du nounours";
+
+    lineArray.appendChild(optionColumn);
+    optionColumn.textContent = "Couleur";
+
     lineArray.appendChild(unitPriceColumn);
-    unitPriceColumn.textContent = "Prix du produit";
-    /*lineArray.appendChild(removeColumn);
-    removeColumn.textContent = "Annuler un produit";************************************************************************************************************************************/
+    unitPriceColumn.textContent = "Prix du nounours";
+
+     /* lineArray.appendChild(removeColumn);
+    removeColumn.textContent = "Annuler un produit"; */
    
 
     //Pour chaque produit du panier, on créé une ligne avec le nom, le prix
@@ -234,10 +269,11 @@ addition = () =>{
     //Init de l'incrémentation de l'id des lignes pour chaque produit
     let i = 0;
     
-    JSON.parse(localStorage.getItem("localStorage")).forEach((productsForLocalStorage)=>{
+    JSON.parse(localStorage.getItem("localStorage")).forEach((optionsTeddyLocalStorage)=>{
       //Création de la ligne
       let productLine = document.createElement("tr");
       let productName = document.createElement("td");
+      let productColor = document.createElement("td")
       let productUnitPrice = document.createElement("td");
       let removeProduct = document.createElement("i");
 
@@ -245,8 +281,8 @@ addition = () =>{
       productLine.setAttribute("id", "product" + i);
       removeProduct.setAttribute("id", "remove" + i);
       removeProduct.setAttribute('class', "fas fa-trash-alt productAnnulation");
-      //Pour chaque produit on créer un event sur l'icone de la corbeille pour annuler ce produit
-      //bind permet de garder l'incrementation du i qui représente l'index tu panier au moment de la création de l'event
+      //Pour chaque produit on créé un event sur l'icone de la corbeille pour annuler ce produit
+      //bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
       //productAnnulation L233
       removeProduct.addEventListener('click', productAnnulation.bind(i));
       i++;
@@ -254,12 +290,14 @@ addition = () =>{
       //Insertion dans le HTML
       facture.appendChild(productLine);
       productLine.appendChild(productName);
+      productLine.appendChild(productColor);
       productLine.appendChild(productUnitPrice);
       productLine.appendChild(removeProduct);
 
       //Contenu des lignes
-      productName.innerHTML = teddy.name;
-      productUnitPrice.textContent = teddy.price / 100 + " €";
+      productName.innerHTML = optionsTeddyLocalStorage.name;
+      productColor.innerHTML = optionsTeddyLocalStorage.color;
+      productUnitPrice.textContent = optionsTeddyLocalStorage.price / 100 + " €";
   });
 
     //Dernière ligne du tableau : Total
@@ -271,8 +309,8 @@ addition = () =>{
 
     //Calcule de l'addition total
     let totalPrice = 0;
-    JSON.parse(localStorage.getItem("localStorage")).forEach((teddy)=>{
-      totalPrice += teddy.price / 100;
+    JSON.parse(localStorage.getItem("localStorage")).forEach((optionsTeddyLocalStorage)=>{
+      totalPrice += optionsTeddyLocalStorage.price / 100;
     });
 
     //Affichage du prix total à payer dans l'addition
@@ -333,7 +371,7 @@ checkInput = () =>{
       }else{
         console.log("Prénom ok");
       };
-      //Test du mail selon le regex de la source L256
+      //Test du mail
       if(checkMail.test(formMail) == false){
         checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre email";
       }else{
