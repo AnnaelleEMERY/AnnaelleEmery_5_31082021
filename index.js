@@ -33,12 +33,6 @@ getProducts = () =>{
 
 
 
-
-
-
-
-
-
 /**********************************************************************************************************/
 /********************************************* Page d'accueil *********************************************/
 /**********************************************************************************************************/
@@ -90,17 +84,12 @@ async function allProductsList(){
 
 
 
-
-
-
-
-
-
+async function productDetailsAndAddToCart(){
+  
 /**********************************************************************************************************/
 /****************************************Page du produit sélectionné***************************************/
 /**********************************************************************************************************/
 
-async function productDetails(){
     //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
     idProduct = location.search.substring(4);
     const selectedTeddy = await getProducts();
@@ -118,55 +107,80 @@ async function productDetails(){
     document.getElementById("one-teddy_description").innerHTML = selectedTeddy.description;
     document.getElementById("one-teddy_price").innerHTML = selectedTeddy.price / 100 + " €";
 
-    
+    // Selection de l'input quantité et ajout d'un EventListener (change)
+    let quantityInput = document.getElementById('quantitySelector')
+    quantityInput.addEventListener('change', quantityChanged)
+
+    // Init de getVal en cas de non-modification de l'input puis récupération de l'input de quantité
+    // pour l'ajout au panier, en empèchant une valeur négative ou un NaaaaN
+
+
+/**********************************************************************************************************/
+/*********************************************Ajouter au panier********************************************/
+/**********************************************************************************************************/
+
+// Prise de la valeur quantité pour le local storage
+    let getVal = 1 ;
+
+     function quantityChanged(event) {
+        var input = event.target
+        if (isNaN(input.value) || input.value <= 0) {
+            input.value = 1
+        }
+        getVal = input.value
+        console.log(getVal)
+        return getVal;
+    }
+
+    // Selection du select color et ajout d'un EventListener (change)
+    let colorInput = document.getElementById('optionSelect')
+
+     //Création et affichage des options
+    selectedTeddy.colors.forEach((teddy)=>{
+      let colorTeddy = document.createElement("option");
+      document.getElementById("optionSelect").appendChild(colorTeddy).innerHTML = teddy;
+    });
+
+    colorInput.addEventListener('change', colorChoice)
+
+    // Initialisation de getColor en cas de non-modification puis récupération du choix de lentilles 
+
+    let getColor = colorInput.value;
+
+    function colorChoice(event) {
+        var input = event.target
+        getColor = input.value
+        console.log(getColor)
+        return getColor;
+    }  
+
+
+  // Sélection du bouton addToCart
+  const addToCart = document.getElementById('btn-addToCart');
+
+  // addEventListener - Ecouter le bouton et envoyer le panier
+    addToCart.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    let colorInput = document.getElementById('optionSelect')
+
     //Création et affichage des options
+   selectedTeddy.colors.forEach((teddy)=>{
+     let colorTeddy = document.createElement("option");
+     document.getElementById("optionSelect").appendChild(colorTeddy).innerHTML = teddy;
+   });
 
-    	selectedTeddy.colors.forEach((teddy)=>{
-    		let optionTeddy = document.createElement("option");
-    		document.getElementById("optionSelect").appendChild(optionTeddy).innerHTML = teddy;
-    	});
-};
+  // Récupération des valeurs
+    let optionsTeddyLocalStorage = {
+      selectedProductName: selectedTeddy.name,
+      selectedProductId: selectedTeddy._id,
+      colorSelected: getColor,
+      quantity: parseInt(getVal),
+      selectedProductPrice: selectedTeddy.price / 100,
+      subtotal: parseInt(selectedTeddy.price / 100 * getVal),
+    };
 
-
-
-/*Fonction ajouter le produit au panier de l'utilisateur
- **********************************************/
-
-async function addToCart(){
-  //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
-  idProduct = location.search.substring(4);
-  const selectedTeddy = await getProducts();
-
-// Sélection du bouton addToCart
-const addToCart = document.getElementById('btn-addToCart');
-
-// addEventListener - Ecouter le bouton et envoyer le panier
-  addToCart.addEventListener('click', (event) => {
-  event.preventDefault();
-
-// mettre le choix de l'utilisateur dans une variable 
-  const colorChoice = selectedTeddy.value;
-  console.log(colorChoice);
-
-// Récupération des valeurs
-  let optionsTeddyLocalStorage = {
-    selectedProductName: selectedTeddy.name,
-    selectedProductId: selectedTeddy._id,
-    optionSelected: optionSelect.color,
-    selectedProductPrice: selectedTeddy.price / 100,
-  };
-
-  console.log(optionsTeddyLocalStorage);
-
-
-
-
-
-
-
-
-
-
+    console.log(optionsTeddyLocalStorage);
 
 
 
@@ -181,44 +195,31 @@ console.log(productsForLocalStorage);
 
 //fonction fenêtre popup =======================> A CHANGER PARCE QUE J'AIME PAS
 const popupConfirmation = () => {
-  if(window.confirm(`Votre ourson a bien été ajouté au panier
-Pour consulter le panier cliquez sur OK, ou revenez à l'accueil avec ANNULER` )) {
-    window.location.href = "index-cart.html";
-  } else {
-    window.location.href = "index.html";
-  }
+  window.confirm(`Votre ourson a bien été ajouté au panier`)
 };
+
+//ajouter un produit selectionné dasn le local storage
+const addProductInLocalStorage = () => {
+  productsForLocalStorage.push(optionsTeddyLocalStorage);
+  localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
+}
 
 /* Ajout d'un produit : 
 s'il y a déjà des produits dans le local storage */
 if(productsForLocalStorage) {
-  productsForLocalStorage.push(optionsTeddyLocalStorage);
-  localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
-  console.log(productsForLocalStorage);
+  addProductInLocalStorage();
 
   popupConfirmation();
 }
 //s'il n'y a PAS de produit dans le local storage
 else {
   productsForLocalStorage = [];
-  productsForLocalStorage.push(optionsTeddyLocalStorage);
-  localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
-
-  console.log(productsForLocalStorage);
+  addProductInLocalStorage();
 
   popupConfirmation();
 }
 });
 };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -296,7 +297,7 @@ addition = () =>{
 
       //Contenu des lignes
       productName.innerHTML = optionsTeddyLocalStorage.name;
-      productColor.innerHTML = optionsTeddyLocalStorage.color;
+      productColor.innerHTML = optionsTeddyLocalStorage.colors;
       productUnitPrice.textContent = optionsTeddyLocalStorage.price / 100 + " €";
   });
 
@@ -334,9 +335,13 @@ productAnnulation = (i) =>{
     //relancer la création de l'addition
     window.location.reload();
 }; 
- 
-/*Formulaire et vérif etat panier
-**********************************************/
+
+
+
+
+/**********************************************************************************************************/
+/*************************************Formulaire et vérif etat panier**************************************/
+/**********************************************************************************************************/
 
 //vérifie les inputs du formulaire
 checkInput = () =>{
@@ -431,7 +436,12 @@ console.log("Le panier n'est pas vide")
 }
 };
 
-/*Envoi du formulaire**********************************************/
+
+
+
+/**********************************************************************************************************/
+/******************************************Envoi du formulaire*********************************************/
+/**********************************************************************************************************/
 
 //Fonction request post de l'API
 sendData = (objetRequest) => {
@@ -489,29 +499,9 @@ validForm = () =>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**********************************************************************************************************/
+/**************************Affichage des informations sur la page de confirmation**************************/
+/**********************************************************************************************************/
 
 
 //Affichage des informations sur la page de confirmation
