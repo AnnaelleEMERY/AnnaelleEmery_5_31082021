@@ -118,8 +118,8 @@ async function productDetailsAndAddToCart(){
 /**********************************************************************************************************/
 /*********************************************Ajouter au panier********************************************/
 /**********************************************************************************************************/
-
-// Prise de la valeur quantité pour le local storage
+  //QUANTITE
+    // Selection de la valeur quantité pour le local storage
     let getVal = 1 ;
 
      function quantityChanged(event) {
@@ -131,6 +131,13 @@ async function productDetailsAndAddToCart(){
         console.log(getVal)
         return getVal;
     }
+
+  //COULEURS
+   //Création et affichage des options de couleur
+   selectedTeddy.colors.forEach((teddy)=>{
+    let colorTeddy = document.createElement("option");
+    document.getElementById("optionSelect").appendChild(colorTeddy).innerHTML = teddy;
+  });
 
     // Selection du select color et ajout d'un EventListener (change)
     let colorInput = document.getElementById('optionSelect')
@@ -162,14 +169,6 @@ async function productDetailsAndAddToCart(){
     addToCart.addEventListener('click', function(event) {
     event.preventDefault();
 
-    let colorInput = document.getElementById('optionSelect')
-
-    //Création et affichage des options
-   selectedTeddy.colors.forEach((teddy)=>{
-     let colorTeddy = document.createElement("option");
-     document.getElementById("optionSelect").appendChild(colorTeddy).innerHTML = teddy;
-   });
-
   // Récupération des valeurs
     let optionsTeddyLocalStorage = {
       selectedProductName: selectedTeddy.name,
@@ -185,40 +184,40 @@ async function productDetailsAndAddToCart(){
 
 
 
-/**********************************************************************************************************/
-/*********************************************Le local storage*********************************************/
-/**********************************************************************************************************/
+  /**********************************************************************************************************/
+  /*********************************************Le local storage*********************************************/
+  /**********************************************************************************************************/
 
-// déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
-let productsForLocalStorage = JSON.parse(localStorage.getItem('localStorage'));
-console.log(productsForLocalStorage);
+  // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
+  let productsForLocalStorage = JSON.parse(localStorage.getItem('localStorage'));
+  console.log(productsForLocalStorage);
 
-//fonction fenêtre popup =======================> A CHANGER PARCE QUE J'AIME PAS
-const popupConfirmation = () => {
-  window.confirm(`Votre ourson a bien été ajouté au panier`)
-};
+  //fonction fenêtre popup
+  const popupConfirmation = () => {
+    window.confirm(`Votre ourson a bien été ajouté au panier`)
+  };
 
-//ajouter un produit selectionné dasn le local storage
-const addProductInLocalStorage = () => {
-  productsForLocalStorage.push(optionsTeddyLocalStorage);
-  localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
-}
+  //ajouter un produit selectionné dasn le local storage
+  const addProductInLocalStorage = () => {
+    productsForLocalStorage.push(optionsTeddyLocalStorage);
+    localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
+  }
 
-/* Ajout d'un produit : 
-s'il y a déjà des produits dans le local storage */
-if(productsForLocalStorage) {
-  addProductInLocalStorage();
+  // AJOUT D'UN PRODUIT
+  //s'il y a déjà des produits dans le local storage
+  if(productsForLocalStorage) {
+    addProductInLocalStorage();
 
-  popupConfirmation();
-}
-//s'il n'y a PAS de produit dans le local storage
-else {
-  productsForLocalStorage = [];
-  addProductInLocalStorage();
+    popupConfirmation();
+  }
+  //s'il n'y a PAS de produit dans le local storage
+  else {
+    productsForLocalStorage = [];
+    addProductInLocalStorage();
 
-  popupConfirmation();
-}
-});
+    popupConfirmation();
+  }
+  });
 };
 
 
@@ -228,7 +227,7 @@ else {
 /***********************************************Page Panier************************************************/
 /**********************************************************************************************************/
 
-addition = () =>{
+addition = () => {
   //Vérifie si un produit est dans le panier
   if(JSON.parse(localStorage.getItem("localStorage")).length > 0){
     //S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
