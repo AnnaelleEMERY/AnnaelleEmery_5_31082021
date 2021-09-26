@@ -142,12 +142,6 @@ async function productDetailsAndAddToCart(){
     // Selection du select color et ajout d'un EventListener (change)
     let colorInput = document.getElementById('optionSelect')
 
-     //Création et affichage des options
-    selectedTeddy.colors.forEach((teddy)=>{
-      let colorTeddy = document.createElement("option");
-      document.getElementById("optionSelect").appendChild(colorTeddy).innerHTML = teddy;
-    });
-
     colorInput.addEventListener('change', colorChoice)
 
     // Initialisation de getColor en cas de non-modification puis récupération du choix de lentilles 
@@ -228,6 +222,12 @@ async function productDetailsAndAddToCart(){
 /**********************************************************************************************************/
 
 addition = () => {
+
+  // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
+  let productsForLocalStorage = JSON.parse(localStorage.getItem('localStorage'));
+  console.log(productsForLocalStorage);
+  
+
   //Vérifie si un produit est dans le panier
   if(JSON.parse(localStorage.getItem("localStorage")).length > 0){
     //S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
@@ -238,7 +238,8 @@ addition = () => {
     let lineArray = document.createElement("tr");
 
     let nameColumn = document.createElement("th");
-    let optionColumn = document.createElement("th");
+    let colorColumn = document.createElement("th");
+    let quantityColumn = document.createElement("th");
     let unitPriceColumn = document.createElement("th");
     let removeColumn = document.createElement("th");
 
@@ -254,8 +255,11 @@ addition = () => {
     lineArray.appendChild(nameColumn);
     nameColumn.textContent = "Nom du nounours";
 
-    lineArray.appendChild(optionColumn);
-    optionColumn.textContent = "Couleur";
+    lineArray.appendChild(colorColumn);
+    colorColumn.textContent = "Couleur";
+
+    lineArray.appendChild(quantityColumn);
+    quantityColumn.textContent = "Quantité";
 
     lineArray.appendChild(unitPriceColumn);
     unitPriceColumn.textContent = "Prix du nounours";
@@ -264,22 +268,23 @@ addition = () => {
     removeColumn.textContent = "Annuler un produit"; */
    
 
-    //Pour chaque produit du panier, on créé une ligne avec le nom, le prix
+    //Pour chaque produit du panier, on créé une ligne avec le nom, le prix, etc
     
     //Init de l'incrémentation de l'id des lignes pour chaque produit
     let i = 0;
     
-    JSON.parse(localStorage.getItem("localStorage")).forEach((optionsTeddyLocalStorage)=>{
+    JSON.parse(localStorage.getItem("localStorage")).forEach((productsForLocalStorage) => {
       //Création de la ligne
       let productLine = document.createElement("tr");
       let productName = document.createElement("td");
       let productColor = document.createElement("td")
+      let productQuantity = document.createElement("td");
       let productUnitPrice = document.createElement("td");
       let removeProduct = document.createElement("i");
 
       //Attribution des class pour le css
-      productLine.setAttribute("id", "product" + i);
-      removeProduct.setAttribute("id", "remove" + i);
+      productLine.setAttribute("id", "productLines" + i);
+      removeProduct.setAttribute("id", "removeLine" + i);
       removeProduct.setAttribute('class', "fas fa-trash-alt productAnnulation");
       //Pour chaque produit on créé un event sur l'icone de la corbeille pour annuler ce produit
       //bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
@@ -291,14 +296,16 @@ addition = () => {
       facture.appendChild(productLine);
       productLine.appendChild(productName);
       productLine.appendChild(productColor);
+      productLine.appendChild(productQuantity);
       productLine.appendChild(productUnitPrice);
       productLine.appendChild(removeProduct);
 
       //Contenu des lignes
-      productName.innerHTML = optionsTeddyLocalStorage.name;
-      productColor.innerHTML = optionsTeddyLocalStorage.colors;
-      productUnitPrice.textContent = optionsTeddyLocalStorage.price / 100 + " €";
-  });
+      productName.innerHTML = productsForLocalStorage.selectedProductName;
+      productColor.innerHTML = productsForLocalStorage.colorSelected;
+      productQuantity.innerHTML = productsForLocalStorage.quantity;
+      productUnitPrice.textContent = productsForLocalStorage.selectedProductPrice * productsForLocalStorage.quantity + " €";
+  
 
     //Dernière ligne du tableau : Total
     facture.appendChild(totalLine);
@@ -307,15 +314,43 @@ addition = () => {
     totalLine.appendChild(priceColumn);
     priceColumn.setAttribute("id", "totalPrice")
 
-    //Calcule de l'addition total
-    let totalPrice = 0;
-    JSON.parse(localStorage.getItem("localStorage")).forEach((optionsTeddyLocalStorage)=>{
-      totalPrice += optionsTeddyLocalStorage.price / 100;
-    });
+
+    
+
+
+
+
+
+
+    //Calcul de l'addition total---------------------------------------------------------------------------------------------------------------------------------
+    let totalPrice = [];
+    let allPrices = productsForLocalStorage.selectedProductPrice * productsForLocalStorage.quantity;
+    console.log(totalPrice);
+// ce code ------------------------------------------------------------------------------------------------------------------------------------------------------
+    function calculateTotalPrice(){
+      for(let i = 0; i < productsForLocalStorage.length; ++i) {
+          let j = Object.values(productsForLocalStorage[i])
+          totalPrice += (j[7]/100);
+      }
+  }
+  // ou ce code--------------------------------------------------------------------------------------------------------------------------------------------------
+    for(p = 0; p < productsForLocalStorage.length; p++){
+      
+      totalPrice.push(allPrices);
+      
+      console.log(totalPrice);
+    }
+
+
+// JE NE SAIS PAS
+
+
+
 
     //Affichage du prix total à payer dans l'addition
-    console.log("Administration : " + totalPrice);
+    /* console.log("Administration : " + totalPrice); */
     document.getElementById("totalPrice").textContent = totalPrice + " €";
+  });
 };
 } 
 
