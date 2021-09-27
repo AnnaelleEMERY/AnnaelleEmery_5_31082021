@@ -262,7 +262,7 @@ addition = () => {
     quantityColumn.textContent = "Quantité";
 
     lineArray.appendChild(unitPriceColumn);
-    unitPriceColumn.textContent = "Prix du nounours";
+    unitPriceColumn.textContent = "Prix total du nounours";
 
      /* lineArray.appendChild(removeColumn);
     removeColumn.textContent = "Annuler un produit"; */
@@ -313,28 +313,19 @@ addition = () => {
     refTotalColumn.textContent = "Total à payer"
     totalLine.appendChild(priceColumn);
     priceColumn.setAttribute("id", "totalPrice")
-
-
     
-
-
-
+  });
 
 
 
     //Calcul de l'addition total---------------------------------------------------------------------------------------------------------------------------------
-    let totalPrice = [];
-
-    console.log("ce que je veux dans le array totalPrice c'est ça : " + productsForLocalStorage.subtotal);
+    var totalPrice = 0;
 
   // Alerte bug mental à partir d'ici /!\--------------------------------------------------------------------------------------------------------------------------------------------------
-    for(p = 0; p < productsForLocalStorage.length; p++){
-      
-      totalPrice += productsForLocalStorage.subtotal;
-      
-      console.log("ici" + totalPrice);
+    for (p = 0; p < productsForLocalStorage.length; p++){
+      var totalPrice = totalPrice + parseFloat(productsForLocalStorage[p].subtotal);
     }
-
+    console.log(totalPrice);
 
 // JE NE SAIS PAS
 
@@ -344,7 +335,7 @@ addition = () => {
     //Affichage du prix total à payer dans l'addition
     /* console.log("Administration : " + totalPrice); */
     document.getElementById("totalPrice").textContent = totalPrice + " €";
-  });
+  
 };
 } 
 
@@ -457,7 +448,7 @@ console.log("Le panier n'est pas vide")
 
   //Si le panier n'est pas vide on remplit le produit envoyé à l'API
   JSON.parse(localStorage.getItem("localStorage")).forEach((productsForLocalStorage) =>{
-    productsForLocalStorage.push(optionsTeddyLocalStorage);
+    productsForLocalStorage.push(productsForLocalStorage);
   });
   console.log("Ce tableau sera envoyé à l'API : " + products)
   return true;
