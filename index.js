@@ -325,7 +325,7 @@ addition = () => {
     //Calcul de l'addition total---------------------------------------------------------------------------------------------------------------------------------
     let totalPrice = [];
 
-    console.log("ce que je veux dans le array c'est ça : " + productsForLocalStorage.subtotal);
+    console.log("ce que je veux dans le array totalPrice c'est ça : " + productsForLocalStorage.subtotal);
 
   // Alerte bug mental à partir d'ici /!\--------------------------------------------------------------------------------------------------------------------------------------------------
     for(p = 0; p < productsForLocalStorage.length; p++){
