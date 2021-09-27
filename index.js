@@ -323,11 +323,11 @@ addition = () => {
 
   // Alerte bug mental à partir d'ici /!\--------------------------------------------------------------------------------------------------------------------------------------------------
     for (p = 0; p < productsForLocalStorage.length; p++){
-      var totalPrice = totalPrice + parseFloat(productsForLocalStorage[p].subtotal);
+      var totalPrice = totalPrice + productsForLocalStorage[p].subtotal;
     }
     console.log(totalPrice);
 
-// JE NE SAIS PAS
+
 
 
 
