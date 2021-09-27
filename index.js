@@ -324,21 +324,15 @@ addition = () => {
 
     //Calcul de l'addition total---------------------------------------------------------------------------------------------------------------------------------
     let totalPrice = [];
-    let allPrices = productsForLocalStorage.selectedProductPrice * productsForLocalStorage.quantity;
-    console.log(totalPrice);
-// ce code ------------------------------------------------------------------------------------------------------------------------------------------------------
-    function calculateTotalPrice(){
-      for(let i = 0; i < productsForLocalStorage.length; ++i) {
-          let j = Object.values(productsForLocalStorage[i])
-          totalPrice += (j[7]/100);
-      }
-  }
-  // ou ce code--------------------------------------------------------------------------------------------------------------------------------------------------
+
+    console.log("ce que je veux dans le array c'est ça : " + productsForLocalStorage.subtotal);
+
+  // Alerte bug mental à partir d'ici /!\--------------------------------------------------------------------------------------------------------------------------------------------------
     for(p = 0; p < productsForLocalStorage.length; p++){
       
-      totalPrice.push(allPrices);
+      totalPrice += productsForLocalStorage.subtotal;
       
-      console.log(totalPrice);
+      console.log("ici" + totalPrice);
     }
 
 
