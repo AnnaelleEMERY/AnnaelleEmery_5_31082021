@@ -4,7 +4,7 @@
   "description": "AnnaelleEmery_5_31082021",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch ./scss/index.scss:css/index.css ./scss/index-product.scss:css/index-product.css"
+    "sass": "sass --watch ./scss/index.scss:css/index.css ./scss/index-product.scss:css/index-product.css ./scss/index-cart.scss:css/index-cart.css"
   },
   "repository": {
     "type": "git",

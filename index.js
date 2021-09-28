@@ -182,7 +182,7 @@ async function productDetailsAndAddToCart() {
     /**********************************************************************************************************/
 
     // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
-    let productsForLocalStorage = JSON.parse(localStorage.getItem('localStorage'));
+    let productsForLocalStorage = JSON.parse(localStorage.getItem('cartLocalStorage'));
     console.log(productsForLocalStorage);
 
     //fonction fenêtre popup
@@ -193,7 +193,7 @@ async function productDetailsAndAddToCart() {
     //ajouter un produit selectionné dasn le local storage
     const addProductInLocalStorage = () => {
       productsForLocalStorage.push(optionsTeddyLocalStorage);
-      localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
+      localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
     }
 
     // AJOUT D'UN PRODUIT
@@ -223,12 +223,12 @@ async function productDetailsAndAddToCart() {
 addition = () => {
 
   // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
-  let productsForLocalStorage = JSON.parse(localStorage.getItem('localStorage'));
+  let productsForLocalStorage = JSON.parse(localStorage.getItem('cartLocalStorage'));
   console.log(productsForLocalStorage);
 
 
   //Vérifie si un produit est dans le panier
-  if (JSON.parse(localStorage.getItem("localStorage")).length > 0) {
+  if (JSON.parse(localStorage.getItem("cartLocalStorage")).length > 0) {
     //S'il n'est pas vide on supprime le message et on créé le tableau récapitulatif
     document.getElementById("emptyCart").remove();
 
@@ -272,7 +272,7 @@ addition = () => {
     //Init de l'incrémentation de l'id des lignes pour chaque produit
     let i = 0;
 
-    JSON.parse(localStorage.getItem("localStorage")).forEach((productsForLocalStorage) => {
+    JSON.parse(localStorage.getItem("cartLocalStorage")).forEach((productsForLocalStorage) => {
       //Création de la ligne
       let productLine = document.createElement("tr");
       let productName = document.createElement("td");
@@ -353,16 +353,15 @@ addition = () => {
         console.log(id_selectioned_remove);
 
         //faire avec la methode filter je selectionne les éléments à garder et je supprime l'élément qui appartient au bouton "supprimer" cliqué
-        productsForLocalStorage = productsForLocalStorage.filter( el => el.selectedProductId !== id_selectioned_remove);
+        productsForLocalStorage = productsForLocalStorage.filter(el => el.selectedProductId !== id_selectioned_remove);
         console.log(productsForLocalStorage);
 
         //l'information changée dans le array productsForLocalStorage est envoyée dans le local storage
-        localStorage.setItem('localStorage', JSON.stringify(productsForLocalStorage));
+        localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
         window.location = window.location;
       });
     };
   };
-};
 
 
 
@@ -370,104 +369,148 @@ addition = () => {
 
 
 
+  /**********************************************************************************************************/
+  /*************************************Formulaire et vérif etat panier**************************************/
+  /**********************************************************************************************************/
 
 
-/**********************************************************************************************************/
-/*************************************Formulaire et vérif etat panier**************************************/
-/**********************************************************************************************************/
 
-//vérifie les inputs du formulaire
-checkInput = () => {
-  //Controle Regex
-  let checkString = /[a-zA-Z]/;
-  let checkNumber = /[0-9]/;
-  //Source pour vérification email => emailregex.com
-  let checkMail = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/y;
-  let checkSpecialCharacter = /[§!@#$%^&*(),.?":{}|<>]/;
-
-  //message fin de controle
-  let checkMessage = "";
-
-  //Récupération des inputs
-  let formNom = document.getElementById("formNom").value;
-  let formPrenom = document.getElementById("formPrenom").value;
-  let formMail = document.getElementById("formMail").value;
-  let formAdresse = document.getElementById("formAdresse").value;
-  let formVille = document.getElementById("formVille").value;
+  //addeventlistener bouton form
+  const btnEnvoyerForm = document.getElementById('envoiPost');
 
 
-  //tests des différents input du formulaire
-  //Test du nom => aucun chiffre ou charactère spécial permis
-  if (checkNumber.test(formNom) == true || checkSpecialCharacter.test(formNom) == true || formNom == "") {
-    checkMessage = "Vérifier/renseigner votre nom";
-  } else {
-    console.log("Nom ok");
-  };
-  //Test du nom => aucun chiffre ou charactère spécial permis
-  if (checkNumber.test(formPrenom) == true || checkSpecialCharacter.test(formPrenom) == true || formPrenom == "") {
-    checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre prénom";
-  } else {
-    console.log("Prénom ok");
-  };
-  //Test du mail
-  if (checkMail.test(formMail) == false) {
-    checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre email";
-  } else {
-    console.log("Adresse mail ok");
-  };
-  //Test de l'adresse => l'adresse ne contient pas obligatoirement un numéro de rue mais n'a pas de characteres spéciaux
-  if (checkSpecialCharacter.test(formAdresse) == true || formAdresse == "") {
-    checkMessage = checkMessage + "\n" + "Vérifier/renseigner votre adresse";
-  } else {
-    console.log("Adresse ok");
-  };
-  //Test de la ville => aucune ville en France ne comporte de chiffre ou charactères spéciaux
-  if (checkSpecialCharacter.test(formVille) == true && checkNumber.test(formVille) == true || formVille == "") {
-    checkMessage = checkMessage + "\n" + "Vérifiez/renseignez votre ville"
-  } else {
-    console.log("Ville ok")
-  };
-  //Si un des champs n'est pas bon => message d'alert avec la raison
-  if (checkMessage != "") {
-    alert("Il est nécessaire de :" + "\n" + checkMessage);
-  }
-  //Si tout est ok construction de l'objet contact => a revoir
-  else {
-    contact = {
-      firstName: formNom,
-      lastName: formPrenom,
-      address: formAdresse,
-      city: formVille,
-      email: formMail
+  btnEnvoyerForm.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const formObject = {
+      nom: document.getElementById('formNom').value,
+      prenom: document.getElementById('formPrenom').value,
+      mail: document.getElementById('formMail').value,
+      adresse: document.getElementById('formAdresse').value,
+      ville: document.getElementById('formVille').value
+    }
+
+    /********************************************************* Gestion validation du formulaire avant envoi au local Storage *********************************************************/
+    //REGEX
+    const regexPrenomNomVille = (value) => {
+      return /^[A-Za-zàáâäèéêëïùûÀÁÂÄÈÉÊËÏÙÛ]{3,20}$/.test(value)
     };
-    return contact;
-  };
+
+    const regexMail = (value) => {
+      return /^[\w-.]+@([\w-]+\.)+[\w-]{2,3}$/.test(value);
+    };
+
+    const regexAdresse = (value) => {
+      return /^[A-Za-z0-9àáâäèéêëïùûÀÁÂÄÈÉÊËÏÙÛ,\s]{5,50}$/.test(value);
+    };
+
+
+    //FONCTIONS DE CONTROLES
+    function controlePrenom() {
+      //contrôle de la validité du prénom
+      const lePrenom = formObject.prenom;
+      if (regexPrenomNomVille(lePrenom)) {
+        document.getElementById('badPrenomInput').textContent = "";
+        return true;
+      } else {
+        document.getElementById('badPrenomInput').textContent = "Veuillez bien renseigner votre prénom";
+        return false;
+      }
+    };
+
+    function controleNom() {
+      //contrôle de la validité du nom
+      const leNom = formObject.nom;
+      if (regexPrenomNomVille(leNom)) {
+        document.getElementById('badNomInput').textContent = "";
+        return true;
+      } else {
+        document.getElementById('badNomInput').textContent = "Veuillez bien renseigner votre nom";
+        return false;
+      }
+    };
+
+    function controleVille() {
+      //contrôle de la validité du nom
+      const laVille = formObject.ville;
+      if (regexPrenomNomVille(laVille)) {
+        document.getElementById('badVilleInput').textContent = "";
+        return true;
+      } else {
+        document.getElementById('badVilleInput').textContent = "Veuillez bien renseigner votre ville";
+        return false;
+      }
+    };
+
+    function controleMail() {
+      //contrôle de la validité du prénom
+      const leMail = formObject.mail;
+      if (regexMail(leMail)) {
+        document.getElementById('badMailInput').textContent = "";
+        return true;
+      } else {
+        document.getElementById('badMailInput').textContent = "Veuillez bien renseigner votre mail";
+        return false;
+      }
+    };
+
+    function controleAdresse() {
+      //contrôle de la validité du prénom
+      const lAdresse = formObject.adresse;
+      if (regexAdresse(lAdresse)) {
+        document.getElementById('badAdressInput').textContent = "";
+        return true;
+      } else {
+        document.getElementById('badAdressInput').textContent = "Veuillez bien renseigner votre adresse";
+        return false;
+      }
+    };
+
+    console.log("controle nom");
+    console.log(controleNom());
+    console.log("controle prénom");
+    console.log(controlePrenom());
+    console.log("controle ville");
+    console.log(controleVille());
+    console.log("controle mail");
+    console.log(controleMail());
+    console.log("controle adresse");
+    console.log(controleAdresse());
+
+    if (controlePrenom() && controleNom() && controleVille() && controleMail() && controleAdresse()) {
+      //mettre objet formObject dans local storage
+      localStorage.setItem("formObject", JSON.stringify(formObject));
+    } else {
+      alert('Votre formulaire comporte une erreur, veuillez le vérifier svp')
+    }
+
+
+    //mettre les values du form et mettre les produits selectionnés dans l'objet à envoyer vers le serveur
+    const aEnvoyer = {
+      productsForLocalStorage,
+      formObject
+    }
+    console.log('aEnvoyer');
+    console.log(aEnvoyer);
+  });
+
+  //mettre contenu du local storage dans formulaire
+  //prendre la key formObject du local Storage et la mettre dans une variable
+  const dataFormStorage = localStorage.getItem("formObject");
+  // convertir la chaine de caractère en objet js
+  const dataFormStorageObjet = JSON.parse(dataFormStorage);
+
+  document.getElementById('formNom').value = dataFormStorageObjet.nom;
+  document.getElementById('formPrenom').value = dataFormStorageObjet.prenom;
+  document.getElementById('formMail').value = dataFormStorageObjet.mail;
+  document.getElementById('formAdresse').value = dataFormStorageObjet.adresse;
+  document.getElementById('formVille').value = dataFormStorageObjet.ville;
+
+
 };
 
-//Vérification du panier
-checkCart = () => {
-  //Vérifier qu'il y ait au moins un produit dans le panier
-  let etatPanier = JSON.parse(localStorage.getItem("productsForLocalStorage"));
-  //Si le panier est vide ou null (suppression localStorage par)=>alerte
-  if (etatPanier == null) {
-    //Si l'utilisateur a supprimé son localStorage etatPanier et qu'il continue le process de commande
-    alert("Il y a eu un problème avec votre panier, une action non autorisée a été faite. Veuillez recharger la page pour la corriger");
-    return false
-  } else if (etatPanier.length < 1 || etatPanier == null) {
-    console.log("ERROR => le localStorage ne contient pas de panier")
-    alert("Votre panier est vide");
-    return false;
-  } else {
-    console.log("Le panier n'est pas vide")
 
-    //Si le panier n'est pas vide on remplit le produit envoyé à l'API
-    JSON.parse(localStorage.getItem("localStorage")).forEach((productsForLocalStorage) => {
-      productsForLocalStorage.push(productsForLocalStorage);
-    });
-    console.log("Ce tableau sera envoyé à l'API : " + products)
-    return true;
-  }
-};
+
 
 
 
@@ -476,6 +519,8 @@ checkCart = () => {
 /******************************************Envoi du formulaire*********************************************/
 /**********************************************************************************************************/
 
+
+/*
 //Fonction request post de l'API
 sendData = (objetRequest) => {
   return new Promise((resolve) => {
@@ -528,14 +573,14 @@ validForm = () => {
   });
 };
 
-
+*/
 
 
 /**********************************************************************************************************/
 /**************************Affichage des informations sur la page de confirmation**************************/
 /**********************************************************************************************************/
 
-
+/*
 //Affichage des informations sur la page de confirmation
 resultOrder = () => {
   if (sessionStorage.getItem("order") != null) {
@@ -553,3 +598,4 @@ resultOrder = () => {
     window.open("index.html");
   }
 }
+*/
