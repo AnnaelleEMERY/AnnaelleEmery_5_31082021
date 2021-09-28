@@ -393,7 +393,7 @@ addition = () => {
     /********************************************************* Gestion validation du formulaire avant envoi au local Storage *********************************************************/
     //REGEX
     const regexPrenomNomVille = (value) => {
-      return /^[A-Za-zàáâäèéêëïùûÀÁÂÄÈÉÊËÏÙÛ]{3,20}$/.test(value)
+      return /^[A-Za-zàáâäèéêëïùûÀÁÂÄÈÉÊËÏÙÛ-]{3,20}$/.test(value)
     };
 
     const regexMail = (value) => {
@@ -485,13 +485,32 @@ addition = () => {
     }
 
 
-    //mettre les values du form et mettre les produits selectionnés dans l'objet à envoyer vers le serveur
+    //mettre les values du form et mettre les produits selectionnés dans l'objet à envoyer VERS LE SERVEUR
     const aEnvoyer = {
       productsForLocalStorage,
       formObject
     }
     console.log('aEnvoyer');
     console.log(aEnvoyer);
+
+    //envoie de l'objet aEnvoyer VERS LE SERVEUR
+
+     /*let stringifySentInformations = JSON.stringify(aEnvoyer);
+    console.log("stringifySentInformations");
+    console.log(stringifySentInformations); */
+
+    const promise01 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order/", {
+      method: "POST",
+      body: JSON.stringify(aEnvoyer),
+      headers: {
+        "Content-type" : "application/json"
+      },
+    });
+
+    console.log("promise01");
+    console.log(promise01);
+
+
   });
 
   //mettre contenu du local storage dans formulaire
@@ -505,7 +524,6 @@ addition = () => {
   document.getElementById('formMail').value = dataFormStorageObjet.mail;
   document.getElementById('formAdresse').value = dataFormStorageObjet.adresse;
   document.getElementById('formVille').value = dataFormStorageObjet.ville;
-
 
 };
 
