@@ -495,21 +495,43 @@ addition = () => {
 
     //envoie de l'objet aEnvoyer VERS LE SERVEUR
 
-     /*let stringifySentInformations = JSON.stringify(aEnvoyer);
-    console.log("stringifySentInformations");
-    console.log(stringifySentInformations); */
-
     const promise01 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order/", {
       method: "POST",
       body: JSON.stringify(aEnvoyer),
       headers: {
         "Content-type" : "application/json"
-      },
+      }
     });
 
     console.log("promise01");
     console.log(promise01);
 
+    //pour voir le résultat du serveur dans la console
+    promise01.then(async(response)=>{
+      try{
+        console.log('response');
+        console.log(response);
+        const contenu = await response.json();
+        console.log(contenu);
+      }catch(e){
+      console.log('e');
+      console.log(e);
+    };
+
+    //pour voir ce qu'il y a réellement sur le serveur
+    const promise02 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order/")
+    promise02.then(async(response)=>{
+      try{
+        console.log("promise02");
+        console.log(promise02);
+        const donneesSurServeur = await response.json()
+        console.log("donneesSurServeur");
+        console.log(donneesSurServeur);
+      }catch(e){
+        console.log('e');
+        console.log(e);
+      }
+    })
 
   });
 
@@ -525,7 +547,7 @@ addition = () => {
   document.getElementById('formAdresse').value = dataFormStorageObjet.adresse;
   document.getElementById('formVille').value = dataFormStorageObjet.ville;
 
-};
+});
 
 
 
@@ -617,3 +639,4 @@ resultOrder = () => {
   }
 }
 */
+};
