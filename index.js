@@ -190,7 +190,7 @@ async function productDetailsAndAddToCart() {
       window.confirm(`Votre ourson a bien été ajouté au panier`)
     };
 
-    //ajouter un produit selectionné dasn le local storage
+    //ajouter un produit selectionné dans le local storage
     const addProductInLocalStorage = () => {
       productsForLocalStorage.push(optionsTeddyLocalStorage);
       localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
@@ -329,19 +329,34 @@ addition = () => {
 
 
 
+/**********************************************************************************************************/
+/************************** Affichage du nombre d'articles à coté du lien panier **************************/
+/**********************************************************************************************************/
+
+
+productsInCartQuantity = 0;
+
+//calcul du total de toutes les quantités
+for (x = 0; x < productsForLocalStorage.length; x++) {
+  var productsInCartQuantity = productsInCartQuantity + productsForLocalStorage[x].quantity;
+}
+
+console.log("productsForLocalStorage.length");
+console.log(productsForLocalStorage.length);
+
+//on pointe le span "itemsInCart" dans le HTML (header) pour y intégrer le résultat
+let itemsInCartSpan = document.getElementById("itemsInCart")
+//on y affiche les informations qu'on y a lié précédement
+itemsInCartSpan.innerText = productsInCartQuantity;
+
+console.log("productsInCartQuantity");
+console.log(productsInCartQuantity);
 
 
 
-
-
-
-
-
-
-
-    //********************************************************************************************************************************************************************************************************/
-    /*Supprimer un produit du panier**************************************************************************************************************************************************************************/
-    //********************************************************************************************************************************************************************************************************/
+/**********************************************************************************************************/
+/*****************************************Suppression d'un article*****************************************/
+/**********************************************************************************************************/
 
     let btn_removeProduct = document.getElementsByClassName('productAnnulation');
 
@@ -362,9 +377,6 @@ addition = () => {
       });
     };
   };
-
-
-
 
 
 
@@ -500,11 +512,11 @@ addition = () => {
 /**********************************************************************************************************/
 
 
-    const promise01 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order/", {
+    const promise01 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order", {
       method: "POST",
       body: JSON.stringify(aEnvoyer),
       headers: {
-        "Content-type" : "application/json"
+        "Content-type" : "application/json;charset=utf-8"
       }
     });
 
@@ -524,7 +536,7 @@ addition = () => {
     };
 
     //pour voir ce qu'il y a réellement sur le serveur
-    const promise02 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order/")
+    const promise02 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order")
     promise02.then(async(response)=>{
       try{
         console.log("promise02");
