@@ -79,7 +79,38 @@ async function allProductsList() {
 };
 
 
+/**********************************************************************************************************/
+/************************** Affichage du nombre d'articles à coté du lien panier **************************/
+/**********************************************************************************************************/
 
+
+function calculateHowManyItemsInCart() {
+
+  let productsForLocalStorage = JSON.parse(localStorage.getItem('cartLocalStorage'));
+  console.log("productsForLocalStorage");
+  console.log(productsForLocalStorage);
+
+  productsInCartQuantity = 0;
+
+  //calcul du total de toutes les quantités
+  for (x = 0; x < productsForLocalStorage.length; x++) {
+    var productsInCartQuantity = productsInCartQuantity + productsForLocalStorage[x].quantity;
+  }
+
+  console.log("productsForLocalStorage.length");
+  console.log(productsForLocalStorage.length);
+
+
+
+//on pointe le span "itemsInCart" dans le HTML (header) pour y intégrer le résultat
+let itemsInCartSpan = document.getElementById("itemsInCart")
+//on y affiche les informations qu'on y a lié précédement
+itemsInCartSpan.innerText = productsInCartQuantity;
+
+console.log("productsInCartQuantity");
+console.log(productsInCartQuantity);
+
+}
 
 
 
@@ -328,35 +359,9 @@ addition = () => {
 
 
 
-
-/**********************************************************************************************************/
-/************************** Affichage du nombre d'articles à coté du lien panier **************************/
-/**********************************************************************************************************/
-
-
-productsInCartQuantity = 0;
-
-//calcul du total de toutes les quantités
-for (x = 0; x < productsForLocalStorage.length; x++) {
-  var productsInCartQuantity = productsInCartQuantity + productsForLocalStorage[x].quantity;
-}
-
-console.log("productsForLocalStorage.length");
-console.log(productsForLocalStorage.length);
-
-//on pointe le span "itemsInCart" dans le HTML (header) pour y intégrer le résultat
-let itemsInCartSpan = document.getElementById("itemsInCart")
-//on y affiche les informations qu'on y a lié précédement
-itemsInCartSpan.innerText = productsInCartQuantity;
-
-console.log("productsInCartQuantity");
-console.log(productsInCartQuantity);
-
-
-
-/**********************************************************************************************************/
-/*****************************************Suppression d'un article*****************************************/
-/**********************************************************************************************************/
+    /**********************************************************************************************************/
+    /*****************************************Suppression d'un article*****************************************/
+    /**********************************************************************************************************/
 
     let btn_removeProduct = document.getElementsByClassName('productAnnulation');
 
@@ -506,17 +511,17 @@ console.log(productsInCartQuantity);
     console.log(aEnvoyer);
 
 
-    
-/**********************************************************************************************************/
-/******************************************Envoi VERS LE SERVEUR*********************************************/
-/**********************************************************************************************************/
+
+    /**********************************************************************************************************/
+    /******************************************Envoi VERS LE SERVEUR*********************************************/
+    /**********************************************************************************************************/
 
 
     const promise01 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order", {
       method: "POST",
       body: JSON.stringify(aEnvoyer),
       headers: {
-        "Content-type" : "application/json;charset=utf-8"
+        "Content-type": "application/json;charset=utf-8"
       }
     });
 
@@ -524,47 +529,48 @@ console.log(productsInCartQuantity);
     console.log(promise01);
 
     //pour voir le résultat du serveur dans la console
-    promise01.then(async(response)=>{
-      try{
+    promise01.then(async (response) => {
+      try {
         console.log('response');
         console.log(response);
         const contenu = await response.json();
         console.log(contenu);
-      }catch(e){
-      console.log('e');
-      console.log(e);
-    };
-
-    //pour voir ce qu'il y a réellement sur le serveur
-    const promise02 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order")
-    promise02.then(async(response)=>{
-      try{
-        console.log("promise02");
-        console.log(promise02);
-        const donneesSurServeur = await response.json()
-        console.log("donneesSurServeur");
-        console.log(donneesSurServeur);
-      }catch(e){
+      } catch (e) {
         console.log('e');
         console.log(e);
-      }
-    })
+      };
+
+      //pour voir ce qu'il y a réellement sur le serveur
+      const promise02 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order")
+      promise02.then(async (response) => {
+        try {
+          console.log("promise02");
+          console.log(promise02);
+          const donneesSurServeur = await response.json()
+          console.log("donneesSurServeur");
+          console.log(donneesSurServeur);
+        } catch (e) {
+          console.log('e');
+          console.log(e);
+        }
+      })
+
+    });
+
+    //mettre contenu du local storage dans formulaire
+    //prendre la key formObject du local Storage et la mettre dans une variable
+    const dataFormStorage = localStorage.getItem("formObject");
+    // convertir la chaine de caractère en objet js
+    const dataFormStorageObjet = JSON.parse(dataFormStorage);
+
+    document.getElementById('formNom').value = dataFormStorageObjet.nom;
+    document.getElementById('formPrenom').value = dataFormStorageObjet.prenom;
+    document.getElementById('formMail').value = dataFormStorageObjet.mail;
+    document.getElementById('formAdresse').value = dataFormStorageObjet.adresse;
+    document.getElementById('formVille').value = dataFormStorageObjet.ville;
 
   });
 
-  //mettre contenu du local storage dans formulaire
-  //prendre la key formObject du local Storage et la mettre dans une variable
-  const dataFormStorage = localStorage.getItem("formObject");
-  // convertir la chaine de caractère en objet js
-  const dataFormStorageObjet = JSON.parse(dataFormStorage);
-
-  document.getElementById('formNom').value = dataFormStorageObjet.nom;
-  document.getElementById('formPrenom').value = dataFormStorageObjet.prenom;
-  document.getElementById('formMail').value = dataFormStorageObjet.mail;
-  document.getElementById('formAdresse').value = dataFormStorageObjet.adresse;
-  document.getElementById('formVille').value = dataFormStorageObjet.ville;
-
-});
 
 
 
@@ -573,28 +579,27 @@ console.log(productsInCartQuantity);
 
 
 
+  /**********************************************************************************************************/
+  /**************************Affichage des informations sur la page de confirmation**************************/
+  /**********************************************************************************************************/
 
-/**********************************************************************************************************/
-/**************************Affichage des informations sur la page de confirmation**************************/
-/**********************************************************************************************************/
-
-/*
-//Affichage des informations sur la page de confirmation
-resultOrder = () => {
-  if (sessionStorage.getItem("order") != null) {
-    //Parse du session storage
-    let order = JSON.parse(sessionStorage.getItem("order"));
-    //Implatation de prénom et de id de commande dans le html sur la page de confirmation
-    document.getElementById("lastName").innerHTML = order.contact.lastName
-    document.getElementById("orderId").innerHTML = order.orderId
-
-    //Suppression de la clé du sessionStorage pour renvoyer au else si actualisation de la page ou via url direct
-    sessionStorage.removeItem("order");
-  } else {
-    //avertissement et redirection vers l'accueil
-    alert("Aucune commande passée, vous êtes arrivé ici par erreur");
-    window.open("index.html");
+  /*
+  //Affichage des informations sur la page de confirmation
+  resultOrder = () => {
+    if (sessionStorage.getItem("order") != null) {
+      //Parse du session storage
+      let order = JSON.parse(sessionStorage.getItem("order"));
+      //Implatation de prénom et de id de commande dans le html sur la page de confirmation
+      document.getElementById("lastName").innerHTML = order.contact.lastName
+      document.getElementById("orderId").innerHTML = order.orderId
+  
+      //Suppression de la clé du sessionStorage pour renvoyer au else si actualisation de la page ou via url direct
+      sessionStorage.removeItem("order");
+    } else {
+      //avertissement et redirection vers l'accueil
+      alert("Aucune commande passée, vous êtes arrivé ici par erreur");
+      window.open("index.html");
+    }
   }
-}
-*/
+  */
 };
