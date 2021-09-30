@@ -87,8 +87,6 @@ async function allProductsList() {
 function calculateHowManyItemsInCart() {
 
   let productsForLocalStorage = JSON.parse(localStorage.getItem('cartLocalStorage'));
-  console.log("productsForLocalStorage");
-  console.log(productsForLocalStorage);
 
   productsInCartQuantity = 0;
 
@@ -97,18 +95,10 @@ function calculateHowManyItemsInCart() {
     var productsInCartQuantity = productsInCartQuantity + productsForLocalStorage[x].quantity;
   }
 
-  console.log("productsForLocalStorage.length");
-  console.log(productsForLocalStorage.length);
-
-
-
 //on pointe le span "itemsInCart" dans le HTML (header) pour y intégrer le résultat
 let itemsInCartSpan = document.getElementById("itemsInCart")
 //on y affiche les informations qu'on y a lié précédement
 itemsInCartSpan.innerText = productsInCartQuantity;
-
-console.log("productsInCartQuantity");
-console.log(productsInCartQuantity);
 
 }
 
@@ -203,9 +193,6 @@ async function productDetailsAndAddToCart() {
       subtotal: parseInt(selectedTeddy.price / 100 * getVal),
     };
 
-    console.log(optionsTeddyLocalStorage);
-
-
 
 
     /**********************************************************************************************************/
@@ -255,8 +242,6 @@ addition = () => {
 
   // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
   let productsForLocalStorage = JSON.parse(localStorage.getItem('cartLocalStorage'));
-  console.log(productsForLocalStorage);
-
 
   //Vérifie si un produit est dans le panier
   if (JSON.parse(localStorage.getItem("cartLocalStorage")).length > 0) {
@@ -265,6 +250,7 @@ addition = () => {
 
     //Création de la structure principale du tableau  
     let facture = document.createElement("table");
+    facture.setAttribute("id", "cartTable");
     let lineArray = document.createElement("tr");
 
     let nameColumn = document.createElement("th");
@@ -301,7 +287,7 @@ addition = () => {
     //Pour chaque produit du panier, on créé une ligne avec le nom, le prix, etc
 
     //Init de l'incrémentation de l'id des lignes pour chaque produit
-    let i = 0;
+    let i = 1;
 
     JSON.parse(localStorage.getItem("cartLocalStorage")).forEach((productsForLocalStorage) => {
       //Création de la ligne
@@ -313,8 +299,8 @@ addition = () => {
       let removeProduct = document.createElement("button");
 
       //Attribution des class pour le css
-      productLine.setAttribute("id", "productLines" + i);
-      removeProduct.setAttribute("id", "removeLine" + i);
+      productLine.setAttribute("id", "productLine_" + i++);
+      removeProduct.setAttribute("id", "removeLine_" + (i-1));
       removeProduct.setAttribute('class', "fas fa-trash-alt productAnnulation");
       //Pour chaque produit on créé un event sur l'icone de la corbeille pour annuler ce produit
       //bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
@@ -343,6 +329,43 @@ addition = () => {
       totalLine.appendChild(priceColumn);
       priceColumn.setAttribute("id", "totalPrice")
 
+
+
+
+    /**********************************************************************************************************/
+    /*****************************************Suppression d'un article*****************************************/
+    /**********************************************************************************************************/
+    console.log("productLine");
+    console.log(productLine);
+
+    //Sélection de toutes les lignes comportant leurs id => 'productLine + (i++)
+    let productsTable = document.querySelectorAll('tr');
+    console.log("productsTable");
+    console.log(productsTable); //valide
+    
+    //liste de tous les boutons "supprimer" sélectionnés avec leur id #removeLine_(i-1)
+    let btn_removeProduct = document.getElementsByClassName('productAnnulation');
+    console.log("btn_removeProduct");
+    console.log(btn_removeProduct); //valide
+    
+
+    for (let t=0; t < btn_removeProduct.length; t++) {
+      btn_removeProduct[t].addEventListener("click", (event) => { //valide
+        event.preventDefault();
+
+        //selection de l'id de la ligne qui va être supprimée en cliquant sur le bouton ------- PROBLEME ERROR CERVEAU
+        let id_selectionner_suppression = btn_removeProduct[t].productLine;
+        console.log("id_selectionner_suppression");
+        console.log(id_selectionner_suppression);
+
+      })
+    }
+    
+
+
+
+
+
     });
 
     // Calcul du total de tous les articles
@@ -356,31 +379,7 @@ addition = () => {
     //Affichage du prix total à payer dans l'addition
     /* console.log("Administration : " + totalPrice); */
     document.getElementById("totalPrice").textContent = totalPrice + " €";
-
-
-
-    /**********************************************************************************************************/
-    /*****************************************Suppression d'un article*****************************************/
-    /**********************************************************************************************************/
-
-    let btn_removeProduct = document.getElementsByClassName('productAnnulation');
-
-    for (let i = 0; i < btn_removeProduct.length; i++) {
-      btn_removeProduct[i].addEventListener("click", (event) => {
-        event.preventDefault();
-
-        let id_selectioned_remove = productsForLocalStorage[i].selectedProductId;
-        console.log(id_selectioned_remove);
-
-        //faire avec la methode filter je selectionne les éléments à garder et je supprime l'élément qui appartient au bouton "supprimer" cliqué
-        productsForLocalStorage = productsForLocalStorage.filter(el => el.selectedProductId !== id_selectioned_remove);
-        console.log(productsForLocalStorage);
-
-        //l'information changée dans le array productsForLocalStorage est envoyée dans le local storage
-        localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
-        window.location = window.location;
-      });
-    };
+    
   };
 
 
@@ -513,7 +512,7 @@ addition = () => {
 
 
     /**********************************************************************************************************/
-    /******************************************Envoi VERS LE SERVEUR*********************************************/
+    /******************************************Envoi VERS LE SERVEUR*******************************************/
     /**********************************************************************************************************/
 
 
