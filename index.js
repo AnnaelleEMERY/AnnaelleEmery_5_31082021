@@ -333,10 +333,10 @@ addition = () => {
       /**********************************************************************************************************/
       /*****************************************Vider le panier*****************************************/
       /**********************************************************************************************************/
-      
+
       let btn_deleteCart = document.getElementById("removeAll");
 
-      btn_deleteCart.addEventListener("click", function(){
+      btn_deleteCart.addEventListener("click", function () {
         localStorage.clear();
         location.reload();
         console.log(localStorage);
@@ -471,9 +471,9 @@ addition = () => {
     //mettre objet contact dans local storage
     localStorage.setItem("contact", JSON.stringify(contact));
 
-    
 
-    
+
+
     /**********************************************************************************************************/
     /******************************************Envoi VERS LE SERVEUR*******************************************/
     /**********************************************************************************************************/
@@ -515,7 +515,7 @@ addition = () => {
         });
         console.log("answer");
         console.log(answer);
-        
+
 
         let result = await answer.json();
         console.log("result");
@@ -543,50 +543,46 @@ addition = () => {
   });
 
 
-    /**********************************************************************************************************/
-    /**********************************Remplissage automatique du formulaire***********************************/
-    /**********************************************************************************************************/
-
-    //mettre automatiquement le contenu du local storage dans formulaire*********************************************************************
-    //prendre la key contact du local Storage et la mettre dans une variable
-    const dataFormStorage = localStorage.getItem("contact");
-    console.log("dataFormStorage");
-    console.log(dataFormStorage);
-
-    // convertir la chaine de caractère en objet JS
-    const dataFormStorageObjet = JSON.parse(dataFormStorage);
-    console.log("dataFormStorageObjet");
-    console.log(dataFormStorageObjet);
-
-    document.getElementById('formNom').value = dataFormStorageObjet.lastName;
-    document.getElementById('formPrenom').value = dataFormStorageObjet.firstName;
-    document.getElementById('formMail').value = dataFormStorageObjet.email;
-    document.getElementById('formAdresse').value = dataFormStorageObjet.address;
-    document.getElementById('formVille').value = dataFormStorageObjet.city;
-
-
-
   /**********************************************************************************************************/
-  /**************************Affichage des informations sur la page de confirmation**************************/
+  /**********************************Remplissage automatique du formulaire***********************************/
   /**********************************************************************************************************/
 
-  
-  //Affichage des informations sur la page de confirmation
-  resultOrder = () => {
-    if (result != null) {
-   
-  
-      //Implantation de prénom et de id de commande dans le html sur la page de confirmation
-      document.getElementById("thankFirstName").innerHTML = result.contact.order_FirstName
-      document.getElementById("thankOrderId").innerHTML = result.order_orderId
-      document.getElementById("orderTotalPrice").innerHTML = result.product.order__totalPrice
-  
-      //Suppression de la clé du localStorage pour renvoyer au else si actualisation de la page ou via url direct
-      localStorage.removeItem("order");
-    } else {
-      //avertissement et redirection vers l'accueil
-      alert("Aucune commande passée, vous êtes arrivé ici par erreur");
-      window.open("index.html");
-    }
-  }
+  //mettre automatiquement le contenu du local storage dans formulaire*********************************************************************
+  //prendre la key contact du local Storage et la mettre dans une variable
+  const dataFormStorage = localStorage.getItem("contact");
+  console.log("dataFormStorage");
+  console.log(dataFormStorage);
+
+  // convertir la chaine de caractère en objet JS
+  const dataFormStorageObjet = JSON.parse(dataFormStorage);
+  console.log("dataFormStorageObjet");
+  console.log(dataFormStorageObjet);
+
+  document.getElementById('formNom').value = dataFormStorageObjet.lastName;
+  document.getElementById('formPrenom').value = dataFormStorageObjet.firstName;
+  document.getElementById('formMail').value = dataFormStorageObjet.email;
+  document.getElementById('formAdresse').value = dataFormStorageObjet.address;
+  document.getElementById('formVille').value = dataFormStorageObjet.city;
 };
+
+
+/**********************************************************************************************************/
+/**************************Affichage des informations sur la page de confirmation**************************/
+/**********************************************************************************************************/
+
+
+//Affichage des informations sur la page de confirmation
+resultOrder = () => {
+  let firstNameOrder = JSON.parse(localStorage.getItem('contact')).firstName;
+  console.log("firstNameOrder");
+  console.log(firstNameOrder);
+  
+  //Implantation de prénom et de id de commande dans le html sur la page de confirmation
+          document.getElementById("thankFirstName").innerHTML = firstNameOrder
+          document.getElementById("thankOrderId").innerHTML = localStorage.orderId
+          document.getElementById("orderTotalPrice").innerHTML = localStorage.totalPrice + " €"
+
+  
+    localStorage.clear();
+    console.log(localStorage);
+}
