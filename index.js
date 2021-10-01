@@ -95,10 +95,10 @@ function calculateHowManyItemsInCart() {
     var productsInCartQuantity = productsInCartQuantity + productsForLocalStorage[x].quantity;
   }
 
-//on pointe le span "itemsInCart" dans le HTML (header) pour y intégrer le résultat
-let itemsInCartSpan = document.getElementById("itemsInCart")
-//on y affiche les informations qu'on y a lié précédement
-itemsInCartSpan.innerText = productsInCartQuantity;
+  //on pointe le span "itemsInCart" dans le HTML (header) pour y intégrer le résultat
+  let itemsInCartSpan = document.getElementById("itemsInCart")
+  //on y affiche les informations qu'on y a lié précédement
+  itemsInCartSpan.innerText = productsInCartQuantity;
 
 }
 
@@ -300,7 +300,7 @@ addition = () => {
 
       //Attribution des class pour le css
       productLine.setAttribute("id", "productLine_" + i++);
-      removeProduct.setAttribute("id", "removeLine_" + (i-1));
+      removeProduct.setAttribute("id", "removeLine_" + (i - 1));
       removeProduct.setAttribute('class', "fas fa-trash-alt productAnnulation");
       //Pour chaque produit on créé un event sur l'icone de la corbeille pour annuler ce produit
       //bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
@@ -332,35 +332,35 @@ addition = () => {
 
 
 
-    /**********************************************************************************************************/
-    /*****************************************Suppression d'un article*****************************************/
-    /**********************************************************************************************************/
-    console.log("productLine");
-    console.log(productLine);
+      /**********************************************************************************************************/
+      /*****************************************Suppression d'un article*****************************************/
+      /**********************************************************************************************************/
+      console.log("productLine");
+      console.log(productLine);
 
-    //Sélection de toutes les lignes comportant leurs id => 'productLine + (i++)
-    let productsTable = document.querySelectorAll('tr');
-    console.log("productsTable");
-    console.log(productsTable); //valide
-    
-    //liste de tous les boutons "supprimer" sélectionnés avec leur id #removeLine_(i-1)
-    let btn_removeProduct = document.getElementsByClassName('productAnnulation');
-    console.log("btn_removeProduct");
-    console.log(btn_removeProduct); //valide
-    
+      //Sélection de toutes les lignes comportant leurs id => 'productLine + (i++)
+      let productsTable = document.querySelectorAll('tr');
+      console.log("productsTable");
+      console.log(productsTable); //valide
 
-    for (let t=0; t < btn_removeProduct.length; t++) {
-      btn_removeProduct[t].addEventListener("click", (event) => { //valide
-        event.preventDefault();
+      //liste de tous les boutons "supprimer" sélectionnés avec leur id #removeLine_(i-1)
+      let btn_removeProduct = document.getElementsByClassName('productAnnulation');
+      console.log("btn_removeProduct");
+      console.log(btn_removeProduct); //valide
 
-        //selection de l'id de la ligne qui va être supprimée en cliquant sur le bouton ------- PROBLEME ERROR CERVEAU
-        let id_selectionner_suppression = btn_removeProduct[t].productLine;
-        console.log("id_selectionner_suppression");
-        console.log(id_selectionner_suppression);
 
-      })
-    }
-    
+      for (let t = 0; t < btn_removeProduct.length; t++) {
+        btn_removeProduct[t].addEventListener("click", (event) => { //valide
+          event.preventDefault();
+
+          //selection de l'id de la ligne qui va être supprimée en cliquant sur le bouton ------- PROBLEME ERROR CERVEAU
+          let id_selectionner_suppression = btn_removeProduct[t].productLine;
+          console.log("id_selectionner_suppression");
+          console.log(id_selectionner_suppression);
+
+        })
+      }
+
 
 
 
@@ -379,7 +379,7 @@ addition = () => {
     //Affichage du prix total à payer dans l'addition
     /* console.log("Administration : " + totalPrice); */
     document.getElementById("totalPrice").textContent = totalPrice + " €";
-    
+
   };
 
 
@@ -493,70 +493,7 @@ addition = () => {
     console.log("controle adresse");
     console.log(controleAdresse());
 
-    if (controlePrenom() && controleNom() && controleVille() && controleMail() && controleAdresse()) {
-      //mettre objet formObject dans local storage
-      localStorage.setItem("formObject", JSON.stringify(formObject));
-    } else {
-      alert('Votre formulaire comporte une erreur, veuillez le vérifier svp')
-    }
-
-
-    //mettre les values du form et mettre les produits selectionnés dans l'objet à envoyer VERS LE SERVEUR
-    const aEnvoyer = {
-      productsForLocalStorage,
-      formObject
-    }
-    console.log('aEnvoyer');
-    console.log(aEnvoyer);
-
-
-
-    /**********************************************************************************************************/
-    /******************************************Envoi VERS LE SERVEUR*******************************************/
-    /**********************************************************************************************************/
-
-
-    const promise01 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order", {
-      method: "POST",
-      body: JSON.stringify(aEnvoyer),
-      headers: {
-        "Content-type": "application/json;charset=utf-8"
-      }
-    });
-
-    console.log("promise01");
-    console.log(promise01);
-
-    //pour voir le résultat du serveur dans la console
-    promise01.then(async (response) => {
-      try {
-        console.log('response');
-        console.log(response);
-        const contenu = await response.json();
-        console.log(contenu);
-      } catch (e) {
-        console.log('e');
-        console.log(e);
-      };
-
-      //pour voir ce qu'il y a réellement sur le serveur
-      const promise02 = fetch("https://annaelle-orinoco-api.herokuapp.com/api/teddies/order")
-      promise02.then(async (response) => {
-        try {
-          console.log("promise02");
-          console.log(promise02);
-          const donneesSurServeur = await response.json()
-          console.log("donneesSurServeur");
-          console.log(donneesSurServeur);
-        } catch (e) {
-          console.log('e');
-          console.log(e);
-        }
-      })
-
-    });
-
-    //mettre contenu du local storage dans formulaire
+        //mettre contenu du local storage dans formulaire*********************************************************************
     //prendre la key formObject du local Storage et la mettre dans une variable
     const dataFormStorage = localStorage.getItem("formObject");
     // convertir la chaine de caractère en objet js
@@ -568,8 +505,78 @@ addition = () => {
     document.getElementById('formAdresse').value = dataFormStorageObjet.adresse;
     document.getElementById('formVille').value = dataFormStorageObjet.ville;
 
-  });
+    //mettre objet formObject dans local storage
+    localStorage.setItem("formObject", JSON.stringify(formObject));
 
+
+    /**********************************************************************************************************/
+    /******************************************Envoi VERS LE SERVEUR*******************************************/
+    /**********************************************************************************************************/
+
+    // Création d'une boucle pour récupérer les Id du panier
+
+
+    let idsInCart = []
+
+    function getCartIds() {
+      for (let h = 0; h < productsForLocalStorage.length; h++) {
+        let n = productsForLocalStorage[h].selectedProductId;
+        idsInCart.push(n);
+      }
+      return idsInCart;
+    }
+
+    console.log("getCartIds()");
+    console.log(getCartIds());//ok
+
+    if (controlePrenom() && controleNom() && controleVille() && controleMail() && controleAdresse()) {
+
+      //mettre les values du form et mettre les id des produits selectionnés dans l'objet à envoyer VERS LE SERVEUR
+      const aEnvoyer = {
+        idsInCart,
+        formObject
+      }
+      console.log('aEnvoyer');
+      console.log(aEnvoyer);
+
+      //on récupère les id du panier 
+      getCartIds();
+
+      //puis on stock les informations à transmettre à l'API sous forme de string dans une variable
+      let order = JSON.stringify(aEnvoyer);
+      console.log("order");
+      console.log(order);
+
+      async function sendPostInformations() {
+        let answer = await fetch('https://annaelle-orinoco-api.herokuapp.com/api/teddies/order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          mode: 'cors',
+          body: JSON.stringify(order)
+        });
+        console.log("answer");
+        console.log(answer);
+        
+
+        let result = await answer.json();
+        alert(result.message);
+      }
+
+      sendPostInformations();
+
+      //en revanche, si les informations saisies ne sont pas validées par les regex, on alerte l'utilisateu du problème
+
+
+    } else {
+      alert('Votre formulaire comporte une erreur, veuillez le vérifier svp')
+      console.log('Mauvaise saisie');
+    }
+
+
+
+  });
 
 
 
