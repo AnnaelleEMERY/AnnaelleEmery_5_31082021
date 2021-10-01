@@ -238,6 +238,11 @@ async function productDetailsAndAddToCart() {
 /***********************************************Page Panier************************************************/
 /**********************************************************************************************************/
 
+//apparition du bouton supprimer quand le panier est rempli
+if (localStorage.length === 0) {
+  document.getElementById("removeAll").remove();
+}
+
 addition = () => {
 
   // déclaration de la variable "productsForLocalStorage" dans laquelle on met les keys et les values qui sont dans le local storage
@@ -257,7 +262,6 @@ addition = () => {
     let colorColumn = document.createElement("th");
     let quantityColumn = document.createElement("th");
     let unitPriceColumn = document.createElement("th");
-    let removeColumn = document.createElement("th");
 
     let totalLine = document.createElement("tr");
     let refTotalColumn = document.createElement("th");
@@ -280,9 +284,6 @@ addition = () => {
     lineArray.appendChild(unitPriceColumn);
     unitPriceColumn.textContent = "Prix total du nounours";
 
-    /* lineArray.appendChild(removeColumn);
-   removeColumn.textContent = "Supprimer un produit"; */
-
 
     //Pour chaque produit du panier, on créé une ligne avec le nom, le prix, etc
 
@@ -300,8 +301,6 @@ addition = () => {
 
       //Attribution des class pour le css
       productLine.setAttribute("id", "productLine_" + i++);
-      removeProduct.setAttribute("id", "removeLine_" + (i - 1));
-      removeProduct.setAttribute('class', "fas fa-trash-alt productAnnulation");
       //Pour chaque produit on créé un event sur l'icone de la corbeille pour annuler ce produit
       //bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
       //productAnnulation L233
@@ -313,7 +312,6 @@ addition = () => {
       productLine.appendChild(productColor);
       productLine.appendChild(productQuantity);
       productLine.appendChild(productUnitPrice);
-      productLine.appendChild(removeProduct);
 
       //Contenu des lignes
       productName.innerHTML = productsForLocalStorage.selectedProductName;
@@ -333,39 +331,16 @@ addition = () => {
 
 
       /**********************************************************************************************************/
-      /*****************************************Suppression d'un article*****************************************/
+      /*****************************************Vider le panier*****************************************/
       /**********************************************************************************************************/
-      console.log("productLine");
-      console.log(productLine);
+      
+      let btn_deleteCart = document.getElementById("removeAll");
 
-      //Sélection de toutes les lignes comportant leurs id => 'productLine + (i++)
-      let productsTable = document.querySelectorAll('tr');
-      console.log("productsTable");
-      console.log(productsTable); //valide
-
-      //liste de tous les boutons "supprimer" sélectionnés avec leur id #removeLine_(i-1)
-      let btn_removeProduct = document.getElementsByClassName('productAnnulation');
-      console.log("btn_removeProduct");
-      console.log(btn_removeProduct); //valide
-
-
-      for (let t = 0; t < btn_removeProduct.length; t++) {
-        btn_removeProduct[t].addEventListener("click", (event) => { //valide
-          event.preventDefault();
-
-          //selection de l'id de la ligne qui va être supprimée en cliquant sur le bouton ------- PROBLEME ERROR CERVEAU
-          let id_selectionner_suppression = btn_removeProduct[t].productLine;
-          console.log("id_selectionner_suppression");
-          console.log(id_selectionner_suppression);
-
-        })
-      }
-
-
-
-
-
-
+      btn_deleteCart.addEventListener("click", function(){
+        localStorage.clear();
+        location.reload();
+        console.log(localStorage);
+      })
     });
 
     // Calcul du total de tous les articles
@@ -398,12 +373,12 @@ addition = () => {
   btnEnvoyerForm.addEventListener("click", (e) => {
     e.preventDefault();
 
-    const formObject = {
-      nom: document.getElementById('formNom').value,
-      prenom: document.getElementById('formPrenom').value,
-      mail: document.getElementById('formMail').value,
-      adresse: document.getElementById('formAdresse').value,
-      ville: document.getElementById('formVille').value
+    const contact = {
+      firstName: document.getElementById('formPrenom').value,
+      lastName: document.getElementById('formNom').value,
+      email: document.getElementById('formMail').value,
+      address: document.getElementById('formAdresse').value,
+      city: document.getElementById('formVille').value
     }
 
     /********************************************************* Gestion validation du formulaire avant envoi au local Storage *********************************************************/
@@ -424,7 +399,7 @@ addition = () => {
     //FONCTIONS DE CONTROLES
     function controlePrenom() {
       //contrôle de la validité du prénom
-      const lePrenom = formObject.prenom;
+      const lePrenom = contact.firstName;
       if (regexPrenomNomVille(lePrenom)) {
         document.getElementById('badPrenomInput').textContent = "";
         return true;
@@ -436,7 +411,7 @@ addition = () => {
 
     function controleNom() {
       //contrôle de la validité du nom
-      const leNom = formObject.nom;
+      const leNom = contact.lastName;
       if (regexPrenomNomVille(leNom)) {
         document.getElementById('badNomInput').textContent = "";
         return true;
@@ -448,7 +423,7 @@ addition = () => {
 
     function controleVille() {
       //contrôle de la validité du nom
-      const laVille = formObject.ville;
+      const laVille = contact.city;
       if (regexPrenomNomVille(laVille)) {
         document.getElementById('badVilleInput').textContent = "";
         return true;
@@ -460,7 +435,7 @@ addition = () => {
 
     function controleMail() {
       //contrôle de la validité du prénom
-      const leMail = formObject.mail;
+      const leMail = contact.email;
       if (regexMail(leMail)) {
         document.getElementById('badMailInput').textContent = "";
         return true;
@@ -472,7 +447,7 @@ addition = () => {
 
     function controleAdresse() {
       //contrôle de la validité du prénom
-      const lAdresse = formObject.adresse;
+      const lAdresse = contact.address;
       if (regexAdresse(lAdresse)) {
         document.getElementById('badAdressInput').textContent = "";
         return true;
@@ -493,59 +468,41 @@ addition = () => {
     console.log("controle adresse");
     console.log(controleAdresse());
 
-        //mettre contenu du local storage dans formulaire*********************************************************************
-    //prendre la key formObject du local Storage et la mettre dans une variable
-    const dataFormStorage = localStorage.getItem("formObject");
-    // convertir la chaine de caractère en objet js
-    const dataFormStorageObjet = JSON.parse(dataFormStorage);
+    //mettre objet contact dans local storage
+    localStorage.setItem("contact", JSON.stringify(contact));
 
-    document.getElementById('formNom').value = dataFormStorageObjet.nom;
-    document.getElementById('formPrenom').value = dataFormStorageObjet.prenom;
-    document.getElementById('formMail').value = dataFormStorageObjet.mail;
-    document.getElementById('formAdresse').value = dataFormStorageObjet.adresse;
-    document.getElementById('formVille').value = dataFormStorageObjet.ville;
+    
 
-    //mettre objet formObject dans local storage
-    localStorage.setItem("formObject", JSON.stringify(formObject));
-
-
+    
     /**********************************************************************************************************/
     /******************************************Envoi VERS LE SERVEUR*******************************************/
     /**********************************************************************************************************/
 
     // Création d'une boucle pour récupérer les Id du panier
-
-
-    let idsInCart = []
+    let products = []
 
     function getCartIds() {
       for (let h = 0; h < productsForLocalStorage.length; h++) {
         let n = productsForLocalStorage[h].selectedProductId;
-        idsInCart.push(n);
+        products.push(n);
       }
-      return idsInCart;
+      return products;
     }
 
-    console.log("getCartIds()");
-    console.log(getCartIds());//ok
 
     if (controlePrenom() && controleNom() && controleVille() && controleMail() && controleAdresse()) {
-
-      //mettre les values du form et mettre les id des produits selectionnés dans l'objet à envoyer VERS LE SERVEUR
-      const aEnvoyer = {
-        idsInCart,
-        formObject
-      }
-      console.log('aEnvoyer');
-      console.log(aEnvoyer);
 
       //on récupère les id du panier 
       getCartIds();
 
-      //puis on stock les informations à transmettre à l'API sous forme de string dans une variable
-      let order = JSON.stringify(aEnvoyer);
-      console.log("order");
-      console.log(order);
+      //mettre les values du form et mettre les id des produits selectionnés dans l'objet à envoyer VERS LE SERVEUR
+      const aEnvoyer = {
+        products,
+        contact
+      }
+      console.log('aEnvoyer');
+      console.log(aEnvoyer);
+
 
       async function sendPostInformations() {
         let answer = await fetch('https://annaelle-orinoco-api.herokuapp.com/api/teddies/order', {
@@ -554,14 +511,24 @@ addition = () => {
             'Content-Type': 'application/json;charset=utf-8'
           },
           mode: 'cors',
-          body: JSON.stringify(order)
+          body: JSON.stringify(aEnvoyer)
         });
         console.log("answer");
         console.log(answer);
         
 
         let result = await answer.json();
-        alert(result.message);
+        console.log("result");
+        console.log(result);
+
+        // Si le serveur répond favorablement à la requète, on stocke l'ID de commande dans le localStorage ainsi que le coût total
+        // de la commande. Puis on redirige vers la page de confirmation de comma
+        if (answer.status === 200 || answer.status === 201) {
+          localStorage.setItem("orderId", result.orderId)
+          localStorage.setItem("totalPrice", totalPrice)
+          window.location.href = "/index-confirmation.html";
+        }
+
       }
 
       sendPostInformations();
@@ -573,15 +540,29 @@ addition = () => {
       alert('Votre formulaire comporte une erreur, veuillez le vérifier svp')
       console.log('Mauvaise saisie');
     }
-
-
-
   });
 
 
+    /**********************************************************************************************************/
+    /**********************************Remplissage automatique du formulaire***********************************/
+    /**********************************************************************************************************/
 
+    //mettre automatiquement le contenu du local storage dans formulaire*********************************************************************
+    //prendre la key contact du local Storage et la mettre dans une variable
+    const dataFormStorage = localStorage.getItem("contact");
+    console.log("dataFormStorage");
+    console.log(dataFormStorage);
 
+    // convertir la chaine de caractère en objet JS
+    const dataFormStorageObjet = JSON.parse(dataFormStorage);
+    console.log("dataFormStorageObjet");
+    console.log(dataFormStorageObjet);
 
+    document.getElementById('formNom').value = dataFormStorageObjet.lastName;
+    document.getElementById('formPrenom').value = dataFormStorageObjet.firstName;
+    document.getElementById('formMail').value = dataFormStorageObjet.email;
+    document.getElementById('formAdresse').value = dataFormStorageObjet.address;
+    document.getElementById('formVille').value = dataFormStorageObjet.city;
 
 
 
@@ -589,23 +570,23 @@ addition = () => {
   /**************************Affichage des informations sur la page de confirmation**************************/
   /**********************************************************************************************************/
 
-  /*
+  
   //Affichage des informations sur la page de confirmation
   resultOrder = () => {
-    if (sessionStorage.getItem("order") != null) {
-      //Parse du session storage
-      let order = JSON.parse(sessionStorage.getItem("order"));
-      //Implatation de prénom et de id de commande dans le html sur la page de confirmation
-      document.getElementById("lastName").innerHTML = order.contact.lastName
-      document.getElementById("orderId").innerHTML = order.orderId
+    if (result != null) {
+   
   
-      //Suppression de la clé du sessionStorage pour renvoyer au else si actualisation de la page ou via url direct
-      sessionStorage.removeItem("order");
+      //Implantation de prénom et de id de commande dans le html sur la page de confirmation
+      document.getElementById("thankFirstName").innerHTML = result.contact.order_FirstName
+      document.getElementById("thankOrderId").innerHTML = result.order_orderId
+      document.getElementById("orderTotalPrice").innerHTML = result.product.order__totalPrice
+  
+      //Suppression de la clé du localStorage pour renvoyer au else si actualisation de la page ou via url direct
+      localStorage.removeItem("order");
     } else {
       //avertissement et redirection vers l'accueil
       alert("Aucune commande passée, vous êtes arrivé ici par erreur");
       window.open("index.html");
     }
   }
-  */
 };
