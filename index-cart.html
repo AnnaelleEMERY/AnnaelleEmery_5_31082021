@@ -25,8 +25,7 @@
                                 <a class="nav-link" href="index.html">Boutique</a>
                             </li>
                             <li class="nav-item align-self-end ">
-                                <a class="nav-link" href="index-cart.html">Panier</a>
-                                <span id="itemsInCart"></span>
+                                <a class="nav-link d-flex flex-row flex-nowrap align-items-center" href="index-cart.html">Panier <div id="itemsInCart"></div></a> 
                             </li>
                         </ul>
                     </div>
@@ -38,13 +37,13 @@
     <main class="container">
         <main class="basket flex-block">
             <div id="basket-resume">
-                <p id="emptyCart">Votre panier est vide</p>
+                <p id="emptyCart" class="mt-4 text-center">Votre panier est vide</p>
             </div>
             <button id="removeAll">Vider le panier</button>
 
             
             <div class="form" id="form-div">
-                <form method="post" name="form-panier">
+                <form method="post" name="form-panier" class="d-flex flex-column">
                     <fieldset>
                         <legend>Civilité</legend>
                         <div class="form__group">
@@ -78,7 +77,7 @@
                             <span id="badVilleInput" class="badInput"></span>
                         </div>
                     </fieldset> 
-                    <input type="button" value="Je valide mon panier et mes informations" class="btn btn--form" id="envoiPost">
+                    <input type="button" value="Je valide mon panier et mes informations" class="btn btn--form teddy-card__btn mb-4 mt-4 align-self-center" id="envoiPost">
                 </form>
             </div>
         </main>

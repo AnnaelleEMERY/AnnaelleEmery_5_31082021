@@ -90,17 +90,20 @@ function calculateHowManyItemsInCart() {
 
   productsInCartQuantity = 0;
 
-  //calcul du total de toutes les quantités
-  for (x = 0; x < productsForLocalStorage.length; x++) {
-    var productsInCartQuantity = productsInCartQuantity + productsForLocalStorage[x].quantity;
-  }
-
   //on pointe le span "itemsInCart" dans le HTML (header) pour y intégrer le résultat
   let itemsInCartSpan = document.getElementById("itemsInCart")
-  //on y affiche les informations qu'on y a lié précédement
-  itemsInCartSpan.innerText = productsInCartQuantity;
 
+  if (productsForLocalStorage === null) {
+    return itemsInCartSpan.innerText = productsInCartQuantity;
+  } else {
+    //calcul du total de toutes les quantités
+    for (x = 0; x < productsForLocalStorage.length; x++) {
+      var productsInCartQuantity = productsInCartQuantity + productsForLocalStorage[x].quantity;
+    }
+    return itemsInCartSpan.innerText = productsInCartQuantity;
+  }
 }
+
 
 
 
@@ -257,6 +260,7 @@ addition = () => {
     let facture = document.createElement("table");
     facture.setAttribute("id", "cartTable");
     let lineArray = document.createElement("tr");
+    lineArray.setAttribute("id", "lineTitles");
 
     let nameColumn = document.createElement("th");
     let colorColumn = document.createElement("th");
@@ -264,6 +268,7 @@ addition = () => {
     let unitPriceColumn = document.createElement("th");
 
     let totalLine = document.createElement("tr");
+    totalLine.setAttribute("id", "totalPriceLine");
     let refTotalColumn = document.createElement("th");
     let priceColumn = document.createElement("td");
 
@@ -576,13 +581,13 @@ resultOrder = () => {
   let firstNameOrder = JSON.parse(localStorage.getItem('contact')).firstName;
   console.log("firstNameOrder");
   console.log(firstNameOrder);
-  
-  //Implantation de prénom et de id de commande dans le html sur la page de confirmation
-          document.getElementById("thankFirstName").innerHTML = firstNameOrder
-          document.getElementById("thankOrderId").innerHTML = localStorage.orderId
-          document.getElementById("orderTotalPrice").innerHTML = localStorage.totalPrice + " €"
 
-  
-    localStorage.clear();
-    console.log(localStorage);
+  //Implantation de prénom et de id de commande dans le html sur la page de confirmation
+  document.getElementById("thankFirstName").innerHTML = firstNameOrder
+  document.getElementById("thankOrderId").innerHTML = localStorage.orderId
+  document.getElementById("orderTotalPrice").innerHTML = localStorage.totalPrice + " €"
+
+
+  localStorage.clear();
+  console.log(localStorage);
 }

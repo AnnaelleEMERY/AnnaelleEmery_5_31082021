@@ -9,3 +9,33 @@ body {
 footer {
 	display : table-row;
 }
+
+.teddy-card__btn{
+	align-self: center;
+	background-color: #F3E9F1;
+	border: none;
+	color: #312927;
+	text-decoration: none;
+	padding: 0.5rem 1rem;
+	border-radius: 20px;
+	font-weight: 600;
+	transition: transform 250ms ease-in-out 0s;
+	
+	&:hover{
+		background-color: #825A5A;
+		color: white;
+		transform: translateY(-5px);
+	}
+}
+
+#itemsInCart{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background-color: #905BF7;
+	color: white;
+	width: 2rem;
+	border-radius: 40px;
+	margin-left: 0.2rem;
+}

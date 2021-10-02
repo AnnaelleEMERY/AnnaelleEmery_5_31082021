@@ -51,21 +51,4 @@
         width: 100%; 
         border-radius: 5px;
     }
-
-    &__btn{
-        align-self: center;
-        background-color: #F3E9F1;
-        color: #312927;
-        text-decoration: none;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        transition: transform 250ms ease-in-out 0s;
-        
-        &:hover{
-            background-color: #825A5A;
-            color: white;
-            transform: translateY(-5px);
-        }
-    }
 }

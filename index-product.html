@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width"> 
-	<title>Orinoco</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Orinoco</title>
     <link rel="stylesheet" href="css/index-product.css" />
     <link rel="icon" type="image/png" href="./img/favicon.png">
     <script src="https://kit.fontawesome.com/97fdc17419.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet"> 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
     <header class="bg-light">
         <div class="container">
             <div class="d-flex flex-row">
-                <a class="navbar-brand" href="index.html"><img src="img/logo-orinoco.png" width="150" height="60" alt="Logo Orinoco"/></a>
+                <a class="navbar-brand" href="index.html"><img src="img/logo-orinoco.png" width="150" height="60"
+                        alt="Logo Orinoco" /></a>
                 <nav class="col navbar navbar-expand navbar-light">
                     <div id="navbarContent" class="collapse navbar-collapse">
-                        <ul class="navbar-nav w-100 justify-content-between" >
+                        <ul class="navbar-nav w-100 justify-content-between">
                             <li class="nav-item active">
                                 <a class="nav-link" href="index.html">Boutique</a>
                             </li>
                             <li class="nav-item align-self-end ">
-                                <a class="nav-link" href="index-cart.html">Panier</a>
-                                <span id="itemsInCart"></span>
+                                <a class="nav-link d-flex flex-row flex-nowrap align-items-center" href="index-cart.html">Panier <div id="itemsInCart"></div></a> 
                             </li>
                         </ul>
                     </div>
-                 </nav>
+                </nav>
             </div>
         </div>
     </header>
 
-    <main id="main"class="container">
+    <main id="main" class="container">
         <div id="error">
             <i id="error__logo" class="fas fa-exclamation-triangle"></i>
             <p id="error__msg">Désolé une erreur est survenue, ou la page démandée n'existe pas ! Veuillez réessayer</p>
         </div>
-        
-        <div id="section" class="sheet-product">       
+
+        <div id="section" class="sheet-product">
             <div class="flex-block">
 
                 <div class="sheet-product__img">
                     <img src="#" id="one-teddy_img" class="one-teddy_img" alt="Photo du produit">
                 </div>
-                
+
                 <div class="sheet-product__description">
                     <h2 id="one-teddy_name" class="sheet-product__name">Nom du produit</h2>
-                    <p class="sheet-product__description__head">Description :</p>
+                    <p class="sheet-product__description__head mt-4">Description :</p>
                     <p id="one-teddy_description" class="sheet-product__description__resume"></p>
 
-                    <label for="optionSelect" class="sheet-product__description__head">Choisissez votre option :</label>
-
-                    <div class="div_one-teddy-choice">
-                        <select name="option" id="optionSelect">
-                        </select>
-                    </div>
-
-                    <div class="div_one-teddy-quantity">
-                        <li class="li-quantity">Combien de nounours ?
-                            <input type="number" id="quantitySelector" min="1" max="99" value="1">
-                        </li>
-                    </div>
-
-                    <div class="div_one-teddy-price">
-                        <p class="sheet-product__description__head">Prix : </p>
-                        <p id="one-teddy_price"></p>
-                    </div>
-                    
-                    <div class="sheet-product__description__order">
-                        <button class="btn btn--basket" id="btn-addToCart">Mettre dans le panier</button>
-                    </div>
+                    <div class="div_one-teddy-choice"></div>
+                    <label for="optionSelect" class="sheet-product__description__head">Couleur :</label>
+                    <select name="option" id="optionSelect">
+                    </select>
                 </div>
 
+                <div class="div_one-teddy-quantity">
+                    <li class="li-quantity list-unstyled mt-1">Combien de nounours ?
+                        <input type="number" id="quantitySelector" min="1" max="99" value="1">
+                    </li>
+                </div>
+
+                <div class="div_one-teddy-price">
+                    <p class="sheet-product__description__head">Prix à l'unité : </p>
+                    <p id="one-teddy_price"></p>
+                </div>
+
+                <div class="sheet-product__description__order">
+                    <button class="teddy-card__btn" id="btn-addToCart">Mettre dans le panier</button>
+                </div>
             </div>
+
+        </div>
         </div>
 
         <script src="index.js"></script>
@@ -90,9 +90,11 @@
     <footer class="bg-light">
         <div class="container">
             <div class="d-flex flex-column flex-sm-row pb-4 pt-4">
-                <a class="navbar-brand d-flex justify-content-center justify-content-sm-start" href="index.html"><img src="img/logo-orinoco.png" width="200" height="110" alt="Logo Orinoco"/></a>
+                <a class="navbar-brand d-flex justify-content-center justify-content-sm-start" href="index.html"><img
+                        src="img/logo-orinoco.png" width="200" height="110" alt="Logo Orinoco" /></a>
                 <div class="footer-bloc-list col navbar navbar-light justify-content-center align-items-center">
-                    <ul class="navbar-nav flex-lg-row justify-content-center align-items-lg-center align-items-xl-between text-center w-100" >
+                    <ul
+                        class="navbar-nav flex-lg-row justify-content-center align-items-lg-center align-items-xl-between text-center w-100">
                         <li class="nav-item col">
                             <a class="nav-link" href="#">Politique de confidentialité</a>
                         </li>
@@ -100,10 +102,9 @@
                             <a class="nav-link" href="#">Conditions générales d'utilisation</a>
                         </li>
                         <li class="nav-item col">
-                           <a class="nav-link" href="#">Conditions générales de ventes</a>
+                            <a class="nav-link" href="#">Conditions générales de ventes</a>
                         </li>
-                        <li class="nav-item col"
-                            <a class="nav-link" href="#">Mentions légales</a>
+                        <li class="nav-item col" <a class="nav-link" href="#">Mentions légales</a>
                         </li>
                     </ul>
                 </div>
@@ -111,4 +112,5 @@
         </div>
     </footer>
 </body>
+
 </html>
