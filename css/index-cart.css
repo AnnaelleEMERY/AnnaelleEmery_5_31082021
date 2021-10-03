@@ -11122,6 +11122,16 @@ body {
   display: table;
   width: 100%;
 }
+@media only screen and (min-width: 2000px) {
+  body {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (min-width: 3000px) {
+  body {
+    font-size: 1.5rem;
+  }
+}
 
 footer {
   display: table-row;
@@ -11167,6 +11177,30 @@ footer {
   display: table-header-group;
   justify-content: flex-start;
   vertical-align: baseline;
+}
+
+#cartTable {
+  width: 100%;
+  margin-top: 2rem;
+}
+@media only screen and (min-width: 992px) {
+  #cartTable {
+    width: auto;
+  }
+}
+
+#cartTable tr td {
+  padding: 0.5rem 0rem;
+}
+@media only screen and (min-width: 992px) {
+  #cartTable tr td {
+    padding-right: 8rem;
+  }
+}
+@media only screen and (min-width: 2000px) {
+  #cartTable tr td {
+    padding-right: 10rem;
+  }
 }
 
 /*# sourceMappingURL=index-cart.css.map */

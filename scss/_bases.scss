@@ -1,13 +1,23 @@
+@import "variables";
+
 html, body {
 	height: 100%;
 	margin: 0; padding: 0;
 }
 body {
-	display : table;
+	display: table;
 	width: 100%;
+	
+	@media #{$breakpoint-TV-mid} {
+        font-size: 1.2rem;
+    }
+
+	@media #{$breakpoint-TV-max} {
+        font-size: 1.5rem;
+    }
 }
 footer {
-	display : table-row;
+	display: table-row;
 }
 
 .teddy-card__btn{

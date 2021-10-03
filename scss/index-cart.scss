@@ -10,11 +10,29 @@
     width: 100%;
 }
 
-
-
 #lineTitles{
     display: table-header-group;
     justify-content: flex-start;
     vertical-align: baseline;
 }
 
+#cartTable{
+    width: 100%;
+    margin-top: 2rem;
+    
+    @media #{$breakpoint-tablet-max} {
+        width: auto;
+    }
+}
+
+#cartTable tr td{
+    padding: 0.5rem 0rem;
+
+    @media #{$breakpoint-tablet-max} {
+        padding-right: 8rem;
+    }
+
+    @media #{$breakpoint-TV-mid} {
+        padding-right: 10rem;
+    }
+}

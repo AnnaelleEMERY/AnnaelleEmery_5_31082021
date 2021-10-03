@@ -1,100 +1,107 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width"> 
-	<title>Orinoco</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Orinoco</title>
     <link rel="stylesheet" href="css/index-cart.css" />
     <link rel="icon" type="image/png" href="./img/favicon.png">
     <script src="https://kit.fontawesome.com/97fdc17419.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header class="bg-light">
         <div class="container">
             <div class="d-flex flex-row">
-                <a class="navbar-brand" href="index.html"><img src="img/logo-orinoco.png" width="150" height="60" alt="Logo Orinoco"/></a>
+                <a class="navbar-brand" href="index.html"><img src="img/logo-orinoco.png" width="150" height="60"
+                        alt="Logo Orinoco" /></a>
                 <nav class="col navbar navbar-expand navbar-light">
                     <div id="navbarContent" class="collapse navbar-collapse">
-                        <ul class="navbar-nav w-100 justify-content-between" >
+                        <ul class="navbar-nav w-100 justify-content-between">
                             <li class="nav-item active">
                                 <a class="nav-link" href="index.html">Boutique</a>
                             </li>
                             <li class="nav-item align-self-end ">
-                                <a class="nav-link d-flex flex-row flex-nowrap align-items-center" href="index-cart.html">Panier <div id="itemsInCart"></div></a> 
+                                <a class="nav-link d-flex flex-row flex-nowrap align-items-center"
+                                    href="index-cart.html">Panier <div id="itemsInCart"></div></a>
                             </li>
                         </ul>
                     </div>
-                 </nav>
+                </nav>
             </div>
         </div>
     </header>
 
-    <main class="container">
-        <main class="basket flex-block">
-            <div id="basket-resume">
-                <p id="emptyCart" class="mt-4 text-center">Votre panier est vide</p>
-            </div>
-            <button id="removeAll">Vider le panier</button>
+    <main class="container basket flex-block">
+        <div id="basket-resume">
+            <p id="emptyCart" class="mt-4 text-center">Votre panier est vide</p>
+        </div>
+        <div class="d-flex w-100 flex-row justify-content-center">
+            <button id="removeAll" class="teddy-card__btn mt-4 mb-4">Vider le panier</button>
+        </div>
 
-            
-            <div class="form" id="form-div">
-                <form method="post" name="form-panier" class="d-flex flex-column">
-                    <fieldset>
-                        <legend>Civilité</legend>
+        <div class="form" id="form-div">
+            <form method="post" name="form-panier" class="d-flex flex-column">
+                <fieldset>
+                    <legend>Civilité</legend>
+                    <div class="form__group">
                         <div class="form__group">
-                            <div class="form__group">
-                                <label for="formNom">Nom : </label>
-                                <input type="text" id="formNom" class="form-control input-control" required name="formNom">
-                                <span id="badNomInput" class="badInput"></span>
-                            </div>
-                            <div class="form__group">
-                                <label for="formPrenom" class="right-inline">Prénom :</label>
-                                <input type="text" id="formPrenom" class="form-control input-control" required name="formPrenom">
-                                <span id="badPrenomInput" class="badInput"></span>
-                            </div>
-                        </div>
-                    </fieldset> 
-                    <fieldset>
-                        <legend>Coordonnées</legend>
-                        <div class="form__group">
-                            <label for="formMail">E-mail :</label>
-                            <input type="email" id="formMail" class="form-control input-control" required name="formMail">
-                            <span id="badMailInput" class="badInput"></span>
+                            <label for="formNom">Nom : </label>
+                            <input type="text" id="formNom" class="form-control input-control" required name="formNom">
+                            <span id="badNomInput" class="badInput"></span>
                         </div>
                         <div class="form__group">
-                            <label for="formAdresse">Adresse :</label>
-                            <input type="text" id="formAdresse" class="form-control input-control" required name="formAdresse">
-                            <span id="badAdressInput" class="badInput"></span>
+                            <label for="formPrenom" class="right-inline">Prénom :</label>
+                            <input type="text" id="formPrenom" class="form-control input-control" required
+                                name="formPrenom">
+                            <span id="badPrenomInput" class="badInput"></span>
                         </div>
-                        <div class="form__group">
-                            <label for="formVille">Ville :</label>
-                            <input type="text" id="formVille" class="form-control input-control" required name="formVille">
-                            <span id="badVilleInput" class="badInput"></span>
-                        </div>
-                    </fieldset> 
-                    <input type="button" value="Je valide mon panier et mes informations" class="btn btn--form teddy-card__btn mb-4 mt-4 align-self-center" id="envoiPost">
-                </form>
-            </div>
-        </main>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Coordonnées</legend>
+                    <div class="form__group">
+                        <label for="formMail">E-mail :</label>
+                        <input type="email" id="formMail" class="form-control input-control" required name="formMail">
+                        <span id="badMailInput" class="badInput"></span>
+                    </div>
+                    <div class="form__group">
+                        <label for="formAdresse">Adresse :</label>
+                        <input type="text" id="formAdresse" class="form-control input-control" required
+                            name="formAdresse">
+                        <span id="badAdressInput" class="badInput"></span>
+                    </div>
+                    <div class="form__group">
+                        <label for="formVille">Ville :</label>
+                        <input type="text" id="formVille" class="form-control input-control" required name="formVille">
+                        <span id="badVilleInput" class="badInput"></span>
+                    </div>
+                </fieldset>
+                <button id="envoiPost" class="teddy-card__btn btn--form mb-4 mt-4 align-self-center">Je valide mon
+                    panier et mes informations</button>
+            </form>
+        </div>
 
-        <script src="index.js"></script>
-        <script>
-            calculateHowManyItemsInCart();
-            addition();
-        </script>
+    <script src="index.js"></script>
+    <script>
+        calculateHowManyItemsInCart();
+        addition();
+    </script>
     </main>
 
     <footer class="bg-light">
         <div class="container">
             <div class="d-flex flex-column flex-sm-row pb-4 pt-4">
-                <a class="navbar-brand d-flex justify-content-center justify-content-sm-start" href="index.html"><img src="img/logo-orinoco.png" width="200" height="110" alt="Logo Orinoco"/></a>
+                <a class="navbar-brand d-flex justify-content-center justify-content-sm-start" href="index.html"><img
+                        src="img/logo-orinoco.png" width="200" height="110" alt="Logo Orinoco" /></a>
                 <div class="footer-bloc-list col navbar navbar-light justify-content-center align-items-center">
-                    <ul class="navbar-nav flex-lg-row justify-content-center align-items-lg-center align-items-xl-between text-center w-100" >
+                    <ul
+                        class="navbar-nav flex-lg-row justify-content-center align-items-lg-center align-items-xl-between text-center w-100">
                         <li class="nav-item col">
                             <a class="nav-link" href="#">Politique de confidentialité</a>
                         </li>
@@ -102,9 +109,9 @@
                             <a class="nav-link" href="#">Conditions générales d'utilisation</a>
                         </li>
                         <li class="nav-item col">
-                           <a class="nav-link" href="#">Conditions générales de ventes</a>
+                            <a class="nav-link" href="#">Conditions générales de ventes</a>
                         </li>
-                        <li class="nav-item col"
+                        <li class="nav-item col">
                             <a class="nav-link" href="#">Mentions légales</a>
                         </li>
                     </ul>
@@ -113,4 +120,5 @@
         </div>
     </footer>
 </body>
+
 </html>

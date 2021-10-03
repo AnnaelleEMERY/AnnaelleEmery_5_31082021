@@ -284,7 +284,7 @@ addition = () => {
     colorColumn.textContent = "Couleur";
 
     lineArray.appendChild(quantityColumn);
-    quantityColumn.textContent = "Quantité";
+    quantityColumn.textContent = "Qté";
 
     lineArray.appendChild(unitPriceColumn);
     unitPriceColumn.textContent = "Prix total du nounours";
