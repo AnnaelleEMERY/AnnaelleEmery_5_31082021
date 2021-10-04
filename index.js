@@ -243,7 +243,9 @@ async function productDetailsAndAddToCart() {
 
 //apparition du bouton supprimer quand le panier est rempli
 if (localStorage.length === 0) {
-  document.getElementById("removeAll").remove();
+  document.getElementById("div__removeAll").remove();
+  document.getElementById("envoiPost").remove();
+  document.getElementById("form-div").remove();
 }
 
 addition = () => {
@@ -378,6 +380,8 @@ addition = () => {
   btnEnvoyerForm.addEventListener("click", (e) => {
     e.preventDefault();
 
+    
+
     const contact = {
       firstName: document.getElementById('formPrenom').value,
       lastName: document.getElementById('formNom').value,
@@ -388,7 +392,7 @@ addition = () => {
 
     /********************************************************* Gestion validation du formulaire avant envoi au local Storage *********************************************************/
     //REGEX
-    const regexPrenomNomVille = (value) => {
+    const regexNamesAndCity = (value) => {
       return /^[A-Za-zàáâäèéêëïùûÀÁÂÄÈÉÊËÏÙÛ-]{3,20}$/.test(value)
     };
 
@@ -396,16 +400,16 @@ addition = () => {
       return /^[\w-.]+@([\w-]+\.)+[\w-]{2,3}$/.test(value);
     };
 
-    const regexAdresse = (value) => {
+    const regexAddress = (value) => {
       return /^[A-Za-z0-9àáâäèéêëïùûÀÁÂÄÈÉÊËÏÙÛ,\s]{5,50}$/.test(value);
     };
 
 
     //FONCTIONS DE CONTROLES
-    function controlePrenom() {
+    function firstNameControl() {
       //contrôle de la validité du prénom
       const lePrenom = contact.firstName;
-      if (regexPrenomNomVille(lePrenom)) {
+      if (regexNamesAndCity(lePrenom)) {
         document.getElementById('badPrenomInput').textContent = "";
         return true;
       } else {
@@ -414,10 +418,10 @@ addition = () => {
       }
     };
 
-    function controleNom() {
+    function lastNameControl() {
       //contrôle de la validité du nom
       const leNom = contact.lastName;
-      if (regexPrenomNomVille(leNom)) {
+      if (regexNamesAndCity(leNom)) {
         document.getElementById('badNomInput').textContent = "";
         return true;
       } else {
@@ -426,10 +430,10 @@ addition = () => {
       }
     };
 
-    function controleVille() {
+    function cityControl() {
       //contrôle de la validité du nom
       const laVille = contact.city;
-      if (regexPrenomNomVille(laVille)) {
+      if (regexNamesAndCity(laVille)) {
         document.getElementById('badVilleInput').textContent = "";
         return true;
       } else {
@@ -438,7 +442,7 @@ addition = () => {
       }
     };
 
-    function controleMail() {
+    function mailControl() {
       //contrôle de la validité du prénom
       const leMail = contact.email;
       if (regexMail(leMail)) {
@@ -450,10 +454,10 @@ addition = () => {
       }
     };
 
-    function controleAdresse() {
+    function addressControl() {
       //contrôle de la validité du prénom
       const lAdresse = contact.address;
-      if (regexAdresse(lAdresse)) {
+      if (regexAddress(lAdresse)) {
         document.getElementById('badAdressInput').textContent = "";
         return true;
       } else {
@@ -463,15 +467,15 @@ addition = () => {
     };
 
     console.log("controle nom");
-    console.log(controleNom());
+    console.log(lastNameControl());
     console.log("controle prénom");
-    console.log(controlePrenom());
+    console.log(firstNameControl());
     console.log("controle ville");
-    console.log(controleVille());
+    console.log(cityControl());
     console.log("controle mail");
-    console.log(controleMail());
+    console.log(mailControl());
     console.log("controle adresse");
-    console.log(controleAdresse());
+    console.log(addressControl());
 
     //mettre objet contact dans local storage
     localStorage.setItem("contact", JSON.stringify(contact));
@@ -495,7 +499,7 @@ addition = () => {
     }
 
 
-    if (controlePrenom() && controleNom() && controleVille() && controleMail() && controleAdresse()) {
+    if (firstNameControl() && lastNameControl() && cityControl() && mailControl() && addressControl()) {
 
       //on récupère les id du panier 
       getCartIds();

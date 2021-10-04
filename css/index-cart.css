@@ -11203,4 +11203,9 @@ footer {
   }
 }
 
+#emptyCart {
+  font-size: 1.5rem;
+  padding-top: 2rem;
+}
+
 /*# sourceMappingURL=index-cart.css.map */
