@@ -36,18 +36,9 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
 
-#ajouterProduitPanier {
-    background-color: #825A5A;
-    border-radius:20px;
-    color: white;
-    transition: transform 250ms ease-in-out 0s;
-    
-    &:hover{
-        color: #312927;
-        background-color: #F3E9F1;
-        transform: translateY(-5px);
+    @media #{$breakpoint-tablet-max} {
+        justify-content: start;
     }
 }
 
@@ -74,5 +65,4 @@
     margin-left: 1rem;
     width: 4rem;
 }
-
 

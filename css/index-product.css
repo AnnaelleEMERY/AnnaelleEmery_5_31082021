@@ -11201,17 +11201,10 @@ footer {
   justify-content: center;
   align-items: center;
 }
-
-#ajouterProduitPanier {
-  background-color: #825A5A;
-  border-radius: 20px;
-  color: white;
-  transition: transform 250ms ease-in-out 0s;
-}
-#ajouterProduitPanier:hover {
-  color: #312927;
-  background-color: #F3E9F1;
-  transform: translateY(-5px);
+@media only screen and (min-width: 992px) {
+  .sheet-product__description__order {
+    justify-content: start;
+  }
 }
 
 .div_one-teddy-price {
