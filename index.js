@@ -308,9 +308,6 @@ addition = () => {
 
       //Attribution des class pour le css
       productLine.setAttribute("id", "productLine_" + i++);
-      //Pour chaque produit on créé un event sur l'icone de la corbeille pour annuler ce produit
-      //bind permet de garder l'incrementation du i qui représente l'index du panier au moment de la création de l'event
-      //productAnnulation L233
 
 
       //Insertion dans le HTML
