@@ -289,7 +289,7 @@ addition = () => {
     quantityColumn.textContent = "Qté";
 
     lineArray.appendChild(unitPriceColumn);
-    unitPriceColumn.textContent = "Prix total du nounours";
+    unitPriceColumn.textContent = "Prix du nounours";
 
 
     //Pour chaque produit du panier, on créé une ligne avec le nom, le prix, etc
@@ -349,6 +349,8 @@ addition = () => {
         console.log(localStorage);
       })
     });
+
+    
 
     // Calcul du total de tous les articles
     var totalPrice = 0;
