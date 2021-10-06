@@ -302,7 +302,12 @@ addition = () => {
       let productLine = document.createElement("tr");
       let productName = document.createElement("td");
       let productColor = document.createElement("td")
-      let productQuantity = document.createElement("td");
+      let productQuantity = document.createElement("input");
+      productQuantity.type = "number";
+      productQuantity.value = productsForLocalStorage.quantity;
+      productQuantity.className = "inputCartQty";
+      productQuantity.setAttribute("id", "inputCartQuantity");
+
       let productUnitPrice = document.createElement("td");
       let removeProduct = document.createElement("button");
 
@@ -320,7 +325,6 @@ addition = () => {
       //Contenu des lignes
       productName.innerHTML = productsForLocalStorage.selectedProductName;
       productColor.innerHTML = productsForLocalStorage.colorSelected;
-      productQuantity.innerHTML = productsForLocalStorage.quantity;
       productUnitPrice.textContent = productsForLocalStorage.selectedProductPrice * productsForLocalStorage.quantity + " €";
 
 
@@ -331,8 +335,7 @@ addition = () => {
       totalLine.appendChild(priceColumn);
       priceColumn.setAttribute("id", "totalPrice")
 
-
-
+      
 
       /**********************************************************************************************************/
       /*****************************************Vider le panier*****************************************/
