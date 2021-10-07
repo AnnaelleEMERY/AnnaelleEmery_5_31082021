@@ -217,6 +217,12 @@ async function productDetailsAndAddToCart() {
       localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
     }
 
+    //modifier un produit selectionné dans le local storage
+    const refreshProductInLocalStorage = () => {
+      productsForLocalStorage.push(quantityChanged);
+      localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
+    }
+
     // AJOUT D'UN PRODUIT
     //s'il y a déjà des produits dans le local storage
     if (productsForLocalStorage) {
@@ -241,7 +247,7 @@ async function productDetailsAndAddToCart() {
 /***********************************************Page Panier************************************************/
 /**********************************************************************************************************/
 
-//apparition du bouton supprimer quand le panier est rempli
+//apparition du bouton supprimer quand le panier contient quelque chose
 if (localStorage.length === 0) {
   document.getElementById("div__removeAll").remove();
   document.getElementById("envoiPost").remove();
@@ -335,7 +341,6 @@ addition = () => {
       totalLine.appendChild(priceColumn);
       priceColumn.setAttribute("id", "totalPrice")
 
-      
 
       /**********************************************************************************************************/
       /*****************************************Vider le panier*****************************************/
@@ -349,8 +354,6 @@ addition = () => {
         console.log(localStorage);
       })
     });
-
-    
 
     // Calcul du total de tous les articles
     var totalPrice = 0;
@@ -369,6 +372,41 @@ addition = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+  // Sélection du bouton addToCart
+  const refreshCart = document.getElementById('refreshAll');
+
+  // addEventListener - Ecouter le bouton et envoyer le panier
+  refreshCart.addEventListener('click', function (ev) {
+    ev.preventDefault();
+
+    // Récupération des valeurs
+    let quantityChanged = document.getElementById('inputCartQuantity').value;
+    console.log("quantityChanged");
+    console.log(quantityChanged);
+
+
+    //Et après perdue O_o
+
+  });
+
+
+
+
+
+
+
   /**********************************************************************************************************/
   /*************************************Formulaire et vérif etat panier**************************************/
   /**********************************************************************************************************/
@@ -381,8 +419,6 @@ addition = () => {
 
   btnEnvoyerForm.addEventListener("click", (e) => {
     e.preventDefault();
-
-    
 
     const contact = {
       firstName: document.getElementById('formPrenom').value,
