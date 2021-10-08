@@ -308,11 +308,8 @@ addition = () => {
       let productLine = document.createElement("tr");
       let productName = document.createElement("td");
       let productColor = document.createElement("td")
-      let productQuantity = document.createElement("input");
-      productQuantity.type = "number";
-      productQuantity.value = productsForLocalStorage.quantity;
-      productQuantity.className = "inputCartQty";
-      productQuantity.setAttribute("id", "inputCartQuantity");
+      let productQuantity = document.createElement("td");
+      let modifyTeddy = document.createElement("td");
 
       let productUnitPrice = document.createElement("td");
       let removeProduct = document.createElement("button");
@@ -327,12 +324,14 @@ addition = () => {
       productLine.appendChild(productColor);
       productLine.appendChild(productQuantity);
       productLine.appendChild(productUnitPrice);
+      productLine.appendChild(modifyTeddy);
 
       //Contenu des lignes
       productName.innerHTML = productsForLocalStorage.selectedProductName;
       productColor.innerHTML = productsForLocalStorage.colorSelected;
+      productQuantity.innerHTML = productsForLocalStorage.quantity;
       productUnitPrice.textContent = productsForLocalStorage.selectedProductPrice * productsForLocalStorage.quantity + " €";
-
+      modifyTeddy.innerHTML = `<a href="index-product.html?id=${productsForLocalStorage.selectedProductId}">modifier</a>`;
 
       //Dernière ligne du tableau : Total
       facture.appendChild(totalLine);
@@ -352,6 +351,8 @@ addition = () => {
         localStorage.clear();
         location.reload();
         console.log(localStorage);
+
+        
       })
     });
 
@@ -367,44 +368,7 @@ addition = () => {
     /* console.log("Administration : " + totalPrice); */
     document.getElementById("totalPrice").textContent = totalPrice + " €";
 
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Sélection du bouton addToCart
-  const refreshCart = document.getElementById('refreshAll');
-
-  // addEventListener - Ecouter le bouton et envoyer le panier
-  refreshCart.addEventListener('click', function (ev) {
-    ev.preventDefault();
-
-    // Récupération des valeurs
-    let quantityChanged = document.getElementById('inputCartQuantity').value;
-    console.log("quantityChanged");
-    console.log(quantityChanged);
-
-
-    //Et après perdue O_o
-
-  });
-
-
-
-
-
+};
 
 
   /**********************************************************************************************************/
