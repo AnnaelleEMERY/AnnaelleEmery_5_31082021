@@ -141,19 +141,7 @@ async function productDetailsAndAddToCart() {
   /**********************************************************************************************************/
   /*********************************************Ajouter au panier********************************************/
   /**********************************************************************************************************/
-  //QUANTITE
-  // Selection de la valeur quantité pour le local storage
-  let getVal = 1;
 
-  function quantityChanged(event) {
-    var input = event.target
-    if (isNaN(input.value) || input.value <= 0) {
-      input.value = 1
-    }
-    getVal = input.value
-    console.log(getVal)
-    return getVal;
-  }
 
   //COULEURS
   //Création et affichage des options de couleur
@@ -178,6 +166,19 @@ async function productDetailsAndAddToCart() {
     return getColor;
   }
 
+  //QUANTITE
+  // Selection de la valeur quantité pour le local storage
+  let getVal = 1;
+
+  function quantityChanged(event) {
+    var input = event.target
+    if (isNaN(input.value) || input.value <= 0) {
+      input.value = 1
+    }
+    getVal = input.value
+    console.log(getVal)
+    return getVal;
+  }
 
   // Sélection du bouton addToCart
   const addToCart = document.getElementById('btn-addToCart');
@@ -214,12 +215,6 @@ async function productDetailsAndAddToCart() {
     //ajouter un produit selectionné dans le local storage
     const addProductInLocalStorage = () => {
       productsForLocalStorage.push(optionsTeddyLocalStorage);
-      localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
-    }
-
-    //modifier un produit selectionné dans le local storage
-    const refreshProductInLocalStorage = () => {
-      productsForLocalStorage.push(quantityChanged);
       localStorage.setItem('cartLocalStorage', JSON.stringify(productsForLocalStorage));
     }
 
@@ -309,7 +304,6 @@ addition = () => {
       let productName = document.createElement("td");
       let productColor = document.createElement("td")
       let productQuantity = document.createElement("td");
-      let modifyTeddy = document.createElement("td");
 
       let productUnitPrice = document.createElement("td");
       let removeProduct = document.createElement("button");
@@ -324,14 +318,12 @@ addition = () => {
       productLine.appendChild(productColor);
       productLine.appendChild(productQuantity);
       productLine.appendChild(productUnitPrice);
-      productLine.appendChild(modifyTeddy);
 
       //Contenu des lignes
       productName.innerHTML = productsForLocalStorage.selectedProductName;
       productColor.innerHTML = productsForLocalStorage.colorSelected;
       productQuantity.innerHTML = productsForLocalStorage.quantity;
       productUnitPrice.textContent = productsForLocalStorage.selectedProductPrice * productsForLocalStorage.quantity + " €";
-      modifyTeddy.innerHTML = `<a href="index-product.html?id=${productsForLocalStorage.selectedProductId}">modifier</a>`;
 
       //Dernière ligne du tableau : Total
       facture.appendChild(totalLine);
@@ -351,8 +343,6 @@ addition = () => {
         localStorage.clear();
         location.reload();
         console.log(localStorage);
-
-        
       })
     });
 
@@ -362,7 +352,6 @@ addition = () => {
     for (p = 0; p < productsForLocalStorage.length; p++) {
       var totalPrice = totalPrice + productsForLocalStorage[p].subtotal;
     }
-
 
     //Affichage du prix total à payer dans l'addition
     /* console.log("Administration : " + totalPrice); */
