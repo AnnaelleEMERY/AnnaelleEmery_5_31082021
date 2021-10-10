@@ -14,7 +14,7 @@ getProducts = () => {
         resolve(JSON.parse(this.responseText));
         console.log("Connection ok");
 
-        //L'appel est réussi => suppression des message d'erreur
+        //L'appel est réussi => suppression des messages d'erreur
         error = document.getElementById("error");
         //On supprime le message d'erreur s'il existe
         if (error) {
@@ -61,7 +61,7 @@ async function allProductsList() {
     teddiesList.appendChild(cardElt);
 
     cardElt.appendChild(picElt);
-    cardElt.appendChild(contentElt)
+    cardElt.appendChild(contentElt);
 
     contentElt.appendChild(nameElt);
     contentElt.appendChild(priceElt);
@@ -105,24 +105,17 @@ function calculateHowManyItemsInCart() {
 }
 
 
-
-
-async function productDetailsAndAddToCart() {
-
   /**********************************************************************************************************/
   /****************************************Page du produit sélectionné***************************************/
   /**********************************************************************************************************/
+
+async function productDetailsAndAddToCart() {
 
   //Collecter l'URL après le ?id= pour le récupérer uniquement sur l'API
   idProduct = location.search.substring(4);
   const selectedTeddy = await getProducts();
 
-
   console.log("Ceci est la page du produit id_" + selectedTeddy._id);
-
-  //Faire apparaitre la fiche produit initialement en display none
-  let section = document.getElementById("main");
-  section.style.display = "flex";
 
   //Remplissage de la fiche produit
   document.getElementById("one-teddy_img").setAttribute("src", selectedTeddy.imageUrl);
@@ -134,14 +127,10 @@ async function productDetailsAndAddToCart() {
   let quantityInput = document.getElementById('quantitySelector')
   quantityInput.addEventListener('change', quantityChanged)
 
-  // Init de getVal en cas de non-modification de l'input puis récupération de l'input de quantité
-  // pour l'ajout au panier, en empèchant une valeur négative ou un NaaaaN
-
 
   /**********************************************************************************************************/
   /*********************************************Ajouter au panier********************************************/
   /**********************************************************************************************************/
-
 
   //COULEURS
   //Création et affichage des options de couleur
@@ -152,22 +141,23 @@ async function productDetailsAndAddToCart() {
 
   // Selection du select color et ajout d'un EventListener (change)
   let colorInput = document.getElementById('optionSelect')
-
   colorInput.addEventListener('change', colorChoice)
 
-  // Initialisation de getColor en cas de non-modification puis récupération du choix de lentilles 
-
+  // Initialisation de getColor en cas de non-modification puis récupération du choix de couleur
   let getColor = colorInput.value;
 
   function colorChoice(event) {
     var input = event.target
     getColor = input.value
-    console.log(getColor)
+    console.log(optionSelect)
     return getColor;
   }
 
   //QUANTITE
   // Selection de la valeur quantité pour le local storage
+  // Init de getVal en cas de non-modification de l'input puis récupération de l'input de quantité
+  // pour l'ajout au panier, en empèchant une valeur négative ou un NaaaaN
+
   let getVal = 1;
 
   function quantityChanged(event) {
@@ -534,8 +524,6 @@ addition = () => {
       sendPostInformations();
 
       //en revanche, si les informations saisies ne sont pas validées par les regex, on alerte l'utilisateu du problème
-
-
     } else {
       alert('Votre formulaire comporte une erreur, veuillez le vérifier svp')
       console.log('Mauvaise saisie');
