@@ -516,7 +516,7 @@ addition = () => {
         if (answer.status === 200 || answer.status === 201) {
           localStorage.setItem("orderId", result.orderId)
           localStorage.setItem("totalPrice", totalPrice)
-          window.location.href = "/index-confirmation.html";
+          window.location.href = "./index-confirmation.html";
         }
 
       }
@@ -569,7 +569,6 @@ resultOrder = () => {
   document.getElementById("thankFirstName").innerHTML = firstNameOrder
   document.getElementById("thankOrderId").innerHTML = localStorage.orderId
   document.getElementById("orderTotalPrice").innerHTML = localStorage.totalPrice + " €"
-
 
   localStorage.clear();
   console.log(localStorage);
